@@ -1,0 +1,28 @@
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BWSAL", "BWSAL\BWSAL.vcproj", "{DBD449BF-401A-4B1F-89A2-8811DA9E9E5F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BasicAIModule", "BasicAIModule\BasicAIModule.vcproj", "{A0F5203C-219C-4AAC-9AC2-87AC2C2603F1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DBD449BF-401A-4B1F-89A2-8811DA9E9E5F} = {DBD449BF-401A-4B1F-89A2-8811DA9E9E5F}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DBD449BF-401A-4B1F-89A2-8811DA9E9E5F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DBD449BF-401A-4B1F-89A2-8811DA9E9E5F}.Debug|Win32.Build.0 = Debug|Win32
+		{DBD449BF-401A-4B1F-89A2-8811DA9E9E5F}.Release|Win32.ActiveCfg = Release|Win32
+		{DBD449BF-401A-4B1F-89A2-8811DA9E9E5F}.Release|Win32.Build.0 = Release|Win32
+		{A0F5203C-219C-4AAC-9AC2-87AC2C2603F1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A0F5203C-219C-4AAC-9AC2-87AC2C2603F1}.Debug|Win32.Build.0 = Debug|Win32
+		{A0F5203C-219C-4AAC-9AC2-87AC2C2603F1}.Release|Win32.ActiveCfg = Release|Win32
+		{A0F5203C-219C-4AAC-9AC2-87AC2C2603F1}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
