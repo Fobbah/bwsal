@@ -1,6 +1,5 @@
 #include "BasicAIModule.h"
 #include <BWSAL/Util.h>
-#include <Util/Foreach.h>
 #include <algorithm>
 using namespace BWSAL;
 using namespace BWAPI;
@@ -15,6 +14,7 @@ BasicAIModule::~BasicAIModule()
 
 void BasicAIModule::onStart()
 {
+  BWSAL::BWSAL_init();
   Broodwar->enableFlag( Flag::UserInput );
   BWTA::readMap();
   BWTA::analyze();
@@ -59,7 +59,7 @@ void BasicAIModule::onStart()
   double minDist;
   BWTA::BaseLocation* natural = NULL;
   BWTA::BaseLocation* home = BWTA::getStartLocation( Broodwar->self() );
-  foreach( BWTA::BaseLocation* bl, BWTA::getBaseLocations() )
+  for( BWTA::BaseLocation* bl : BWTA::getBaseLocations() )
   {
     if ( bl != home )
     {
@@ -190,7 +190,7 @@ void BasicAIModule::onFrame()
   m_unitArbitrator->update();
   m_buildEventTimeline->reset();
 
-  foreach( BWAPI::AIModule* m, m_modules )
+  for( BWAPI::AIModule* m : m_modules )
   {
     m->onFrame();
   }
@@ -230,15 +230,15 @@ void BasicAIModule::onFrame()
     m_buildOrderManager->draw(20, y);
   }
 
-  std::set< Unit* > units = Broodwar->self()->getUnits();
+  BWAPI::Unitset units = Broodwar->self()->getUnits();
   if ( m_drawAssignments )
   {
-    foreach( Unit* i, units )
+    for( Unit i : units )
     {
       if ( m_unitArbitrator->hasBid( i ) )
       {
-        int x = i->getPosition().x();
-        int y = i->getPosition().y();
+        int x = i->getPosition().x;
+        int y = i->getPosition().y;
         std::list< std::pair< UnitController*, double > > bids = m_unitArbitrator->getAllBidders( i );
         int y_off = 0;
         bool first = false;
@@ -257,7 +257,7 @@ void BasicAIModule::onFrame()
 
 void BasicAIModule::onSendText( std::string text )
 {
-  foreach( BWAPI::AIModule* m, m_modules )
+  for( BWAPI::AIModule* m : m_modules )
   {
     m->onSendText( text );
   }
@@ -292,50 +292,50 @@ void BasicAIModule::onSendText( std::string text )
   }
 }
 
-void BasicAIModule::onUnitDiscover( BWAPI::Unit* unit )
+void BasicAIModule::onUnitDiscover( BWAPI::Unit unit )
 {
-  foreach( BWAPI::AIModule* m, m_modules )
+  for( BWAPI::AIModule* m : m_modules )
   {
     m->onUnitDiscover( unit );
   }
 }
 
-void BasicAIModule::onUnitEvade( BWAPI::Unit* unit )
+void BasicAIModule::onUnitEvade( BWAPI::Unit unit )
 {
-  foreach( BWAPI::AIModule* m, m_modules )
+  for( BWAPI::AIModule* m : m_modules )
   {
     m->onUnitEvade( unit );
   }
 }
 
-void BasicAIModule::onUnitDestroy( BWAPI::Unit* unit )
+void BasicAIModule::onUnitDestroy( BWAPI::Unit unit )
 {
   m_unitArbitrator->onRemoveObject( unit );
-  foreach( BWAPI::AIModule* m, m_modules )
+  for( BWAPI::AIModule* m : m_modules )
   {
     m->onUnitDestroy( unit );
   }
 }
 
-void BasicAIModule::onUnitMorph( BWAPI::Unit* unit )
+void BasicAIModule::onUnitMorph( BWAPI::Unit unit )
 {
-  foreach( BWAPI::AIModule* m, m_modules )
+  for( BWAPI::AIModule* m : m_modules )
   {
     m->onUnitMorph( unit );
   }
 }
 
-void BasicAIModule::onUnitRenegade( BWAPI::Unit* unit )
+void BasicAIModule::onUnitRenegade( BWAPI::Unit unit )
 {
-  foreach( BWAPI::AIModule* m, m_modules )
+  for( BWAPI::AIModule* m : m_modules )
   {
     m->onUnitRenegade( unit );
   }
 }
 
-void BasicAIModule::onUnitComplete( BWAPI::Unit* unit )
+void BasicAIModule::onUnitComplete( BWAPI::Unit unit )
 {
-  foreach( BWAPI::AIModule* m, m_modules )
+  for( BWAPI::AIModule* m : m_modules )
   {
     m->onUnitComplete( unit );
   }
