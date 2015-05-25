@@ -27,12 +27,12 @@ namespace BWSAL
 
   UnitGroupManager::UnitGroupManager()
   {
-    for each ( BWAPI::Unit* u in BWAPI::Broodwar->getAllUnits() )
+    for each ( BWAPI::Unit u in BWAPI::Broodwar->getAllUnits() )
     {
       onUnitDiscover( u );
     }
     neutral = NULL;
-    for each ( BWAPI::Player* p in BWAPI::Broodwar->getPlayers() )
+    for each ( BWAPI::Player p in BWAPI::Broodwar->getPlayers() )
     {
       if ( p->isNeutral() )
       {
@@ -46,7 +46,7 @@ namespace BWSAL
     s_UnitGroupManager = NULL;
   }
 
-  void UnitGroupManager::onUnitDiscover( BWAPI::Unit* unit )
+  void UnitGroupManager::onUnitDiscover( BWAPI::Unit unit )
   {
     unitOwner[unit] = unit->getPlayer();
     unitType[unit] = unit->getType();
@@ -55,7 +55,7 @@ namespace BWSAL
     allUnits.insert( unit );
   }
 
-  void UnitGroupManager::onUnitEvade( BWAPI::Unit* unit )
+  void UnitGroupManager::onUnitEvade( BWAPI::Unit unit )
   {
     unitOwner[unit] = unit->getPlayer();
     unitType[unit] = unit->getType();
@@ -64,7 +64,7 @@ namespace BWSAL
     allUnits.erase( unit );
   }
 
-  void UnitGroupManager::onUnitMorph( BWAPI::Unit* unit )
+  void UnitGroupManager::onUnitMorph( BWAPI::Unit unit )
   {
     data[unitOwner[unit]][unitType[unit]].erase( unit );
     unitType[unit] = unit->getType();
@@ -72,7 +72,7 @@ namespace BWSAL
     data[unit->getPlayer()][unit->getType()].insert( unit );
   }
 
-  void UnitGroupManager::onUnitRenegade( BWAPI::Unit* unit )
+  void UnitGroupManager::onUnitRenegade( BWAPI::Unit unit )
   {
     data[unitOwner[unit]][unitType[unit]].erase( unit );
     allOwnedUnits[unitOwner[unit]].erase( unit );
@@ -111,7 +111,7 @@ namespace BWSAL
     return UnitGroupManager::s_UnitGroupManager->data[BWAPI::Broodwar->enemy()][type];
   }
 
-  UnitGroup SelectAll( BWAPI::Player* player, BWAPI::UnitType type )
+  UnitGroup SelectAll( BWAPI::Player player, BWAPI::UnitType type )
   {
     return UnitGroupManager::s_UnitGroupManager->data[player][type];
   }

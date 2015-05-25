@@ -6,7 +6,6 @@
 #include <BWSAL/Task.h>
 #include <BWSAL/Util.h>
 #include <BWAPI.h>
-#include <Util/Foreach.h>
 namespace BWSAL
 {
   BuildState::BuildState()
@@ -34,7 +33,7 @@ namespace BWSAL
     m_gas += deltaTime * m_gasWorkers * GAS_PER_WORKER_PER_FRAME;
     m_time = time;
 
-    foreach( BuildUnit* larvaProducer, BuildUnitManager::getInstance()->getUnits() )
+    for( BuildUnit* larvaProducer : BuildUnitManager::getInstance()->getUnits() )
     {
       if ( larvaProducer->getType().getUnitType().producesLarva() )
       {
@@ -187,7 +186,7 @@ namespace BWSAL
     BWAPI::Race r = BWAPI::Broodwar->self()->getRace();
 
     // Update data for all existing build units
-    foreach( BWAPI::Unit* u, BWAPI::Broodwar->self()->getUnits() )
+    for( BWAPI::Unit u : BWAPI::Broodwar->self()->getUnits() )
     {
       BuildUnit *bu = BuildUnit::getBuildUnitIfExists( u );
       if ( bu == NULL )
@@ -219,8 +218,8 @@ namespace BWSAL
         {
           // Compute unclaimed larva count
           int count = 0;
-          std::set< BWAPI::Unit* > larva = u->getLarva();
-          foreach( BWAPI::Unit* l, larva )
+          const BWAPI::Unitset larva = u->getLarva();
+          for( BWAPI::Unit l : larva )
           {
             if ( BuildUnit::getBuildUnitIfExists( l ) == NULL )
             {
@@ -248,7 +247,7 @@ namespace BWSAL
     }
 
     // Update data for no-longer-existing build units
-    foreach( BuildUnit* bu, BuildUnitManager::getInstance()->getUnits() )
+    for( BuildUnit* bu : BuildUnitManager::getInstance()->getUnits() )
     {
       if ( bu->getUnit() != NULL && bu->getUnit()->exists() == false )
       {
@@ -260,7 +259,7 @@ namespace BWSAL
     m_gasWorkers = WorkerManager::getInstance()->gasWorkerCount();
     m_completedBuildTypes = 0;
     // Update completed build types
-    foreach( BuildType t, BuildTypes::allBuildTypes() )
+    for( BuildType t : BuildTypes::allBuildTypes() )
     {
       if ( t.isTechType() )
       {
@@ -300,7 +299,7 @@ namespace BWSAL
 
   void BuildState::createUnclaimedBuildUnits()
   {
-    foreach( BWAPI::Unit* u, BWAPI::Broodwar->self()->getUnits() )
+    for( BWAPI::Unit u : BWAPI::Broodwar->self()->getUnits() )
     {
       // Don't make build units for larva
       // Tasks will claim them as they execute

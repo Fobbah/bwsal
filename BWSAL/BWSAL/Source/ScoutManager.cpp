@@ -2,7 +2,6 @@
 #include <BWSAL/ScoutManager.h>
 #include <BWSAL/UnitGroupManager.h>
 #include <BWSAL/InformationManager.h>
-#include <Util/Foreach.h>
 namespace BWSAL
 {
   ScoutManager* ScoutManager::s_scoutManager = NULL;
@@ -47,7 +46,7 @@ namespace BWSAL
 
     m_myStartLocation = BWTA::getStartLocation( BWAPI::Broodwar->self() );
     std::set< BWTA::BaseLocation* > startLocations;
-    foreach( BWTA::BaseLocation * bl, BWTA::getStartLocations() )
+    for( BWTA::BaseLocation * bl : BWTA::getStartLocations() )
     {
       if ( m_myStartLocation->getGroundDistance( bl ) > 0 && bl != m_myStartLocation )
       {
@@ -56,7 +55,7 @@ namespace BWSAL
     }
 
     std::list< BWTA::BaseLocation* > path = getScoutPath( startLocations ).first;
-    foreach( BWTA::BaseLocation* bl, path )
+    for( BWTA::BaseLocation* bl : path )
     {
       m_baseLocationsToScout.push_back( bl );
     }
@@ -76,7 +75,7 @@ namespace BWSAL
       return shortestPath;
     }
     // Try traveling to each base location first
-    foreach( BWTA::BaseLocation* bl, baseLocations )
+    for( BWTA::BaseLocation* bl : baseLocations )
     {
       // Travel to bl first
       baseLocations.erase( bl );
@@ -115,11 +114,11 @@ namespace BWSAL
     return getShortestPath( start, baseLocations );
   }
 
-  void ScoutManager::onOffer( std::set< BWAPI::Unit* > units )
+  void ScoutManager::onOffer( std::set< BWAPI::Unit > units )
   {
     // First find an overlord
-    std::set< BWAPI::Unit* >::iterator u2;
-    for ( std::set< BWAPI::Unit* >::iterator u = units.begin(); u != units.end(); u = u2 )
+    std::set< BWAPI::Unit >::iterator u2;
+    for ( std::set< BWAPI::Unit >::iterator u = units.begin(); u != units.end(); u = u2 )
     {
       u2 = u;
       u2++;
@@ -137,7 +136,7 @@ namespace BWSAL
       }
     }
 
-    for ( std::set< BWAPI::Unit* >::iterator u = units.begin(); u != units.end(); u = u2 )
+    for ( std::set< BWAPI::Unit >::iterator u = units.begin(); u != units.end(); u = u2 )
     {
       u2 = u;
       u2++;
@@ -156,13 +155,13 @@ namespace BWSAL
     }
 
     // decline remaining units
-    foreach( BWAPI::Unit* u, units )
+    for( BWAPI::Unit u : units )
     {
       m_arbitrator->decline( this, u, 0 );
     }
   }
 
-  void ScoutManager::onRevoke( BWAPI::Unit *unit, double bid )
+  void ScoutManager::onRevoke( BWAPI::Unit unit, double bid )
   {
     if ( m_scouts.find( unit ) != m_scouts.end() )
     {
@@ -172,7 +171,7 @@ namespace BWSAL
         m_baseLocationsToScout.push_back( lostTarget );
         if ( m_debugMode )
         {
-          BWAPI::Broodwar->printf( "Reassigning ( %d, %d )", lostTarget->getPosition().x(), lostTarget->getPosition().y() );
+          BWAPI::Broodwar->printf( "Reassigning ( %d, %d )", lostTarget->getPosition().x, lostTarget->getPosition().y );
         }
       }
       m_scouts.erase( unit );
@@ -223,15 +222,15 @@ namespace BWSAL
   void ScoutManager::drawAssignments()
   {
     // draw target vector for each scout
-    for ( std::map< BWAPI::Unit*, ScoutData >::iterator s = m_scouts.begin(); s != m_scouts.end(); s++ )
+    for ( std::map< BWAPI::Unit, ScoutData >::iterator s = m_scouts.begin(); s != m_scouts.end(); s++ )
     {
       if ( s->second.m_mode != ScoutData::Idle )
       {
         BWAPI::Position scoutPos = s->first->getPosition();
         BWAPI::Position targetPos = s->second.m_target->getPosition();
-        BWAPI::Broodwar->drawLineMap( scoutPos.x(), scoutPos.y(), targetPos.x(), targetPos.y(), BWAPI::Colors::Yellow );
-        BWAPI::Broodwar->drawCircleMap( scoutPos.x(), scoutPos.y(), 6, BWAPI::Colors::Yellow );
-        BWAPI::Broodwar->drawCircleMap( targetPos.x(), targetPos.y(), s->first->getType().sightRange(), BWAPI::Colors::Yellow );
+        BWAPI::Broodwar->drawLineMap( scoutPos.x, scoutPos.y, targetPos.x, targetPos.y, BWAPI::Colors::Yellow );
+        BWAPI::Broodwar->drawCircleMap( scoutPos.x, scoutPos.y, 6, BWAPI::Colors::Yellow );
+        BWAPI::Broodwar->drawCircleMap( targetPos.x, targetPos.y, s->first->getType().sightRange(), BWAPI::Colors::Yellow );
       }
     }
   }
@@ -254,11 +253,11 @@ namespace BWSAL
   void ScoutManager::requestScout( double bid )
   {
     // Bid on all completed workers.
-    std::set< BWAPI::Unit* > usefulUnits = SelectAll()( isWorker, Overlord )( isCompleted ).not( isCarryingMinerals, isCarryingGas, isGatheringGas );
+    std::set< BWAPI::Unit > usefulUnits = SelectAll()( isWorker, Overlord )( isCompleted ).not( isCarryingMinerals, isCarryingGas, isGatheringGas );
     m_arbitrator->setBid( this, usefulUnits, bid );
   }
 
-  void ScoutManager::addScout( BWAPI::Unit* u )
+  void ScoutManager::addScout( BWAPI::Unit u )
   {
     ScoutData temp;
     m_scouts.insert( std::make_pair( u, temp ) );
@@ -267,17 +266,17 @@ namespace BWSAL
   void ScoutManager::updateScoutAssignments()
   {
     // Remove scout positions if the enemy is not there.
-    for ( std::map< BWAPI::Unit*, ScoutData >::iterator s = m_scouts.begin(); s != m_scouts.end(); s++ )
+    for ( std::map< BWAPI::Unit, ScoutData >::iterator s = m_scouts.begin(); s != m_scouts.end(); s++ )
     {
       if ( s->second.m_mode == ScoutData::Searching
         && s->first->getPosition().getDistance( s->second.m_target->getPosition() ) < s->first->getType().sightRange() )
       {
         bool empty = true;
-        for ( int x = s->second.m_target->getTilePosition().x(); x < s->second.m_target->getTilePosition().x() + 4; x++ )
+        for ( int x = s->second.m_target->getTilePosition().x; x < s->second.m_target->getTilePosition().x + 4; x++ )
         {
-          for ( int y = s->second.m_target->getTilePosition().y(); y < s->second.m_target->getTilePosition().y() + 3; y++ )
+          for ( int y = s->second.m_target->getTilePosition().y; y < s->second.m_target->getTilePosition().y + 3; y++ )
           {
-            foreach( BWAPI::Unit* u, BWAPI::Broodwar->getUnitsOnTile( x, y ) )
+            for( BWAPI::Unit u : BWAPI::Broodwar->getUnitsOnTile( x, y ) )
             {
               if ( u->getType().isResourceDepot() )
               {
@@ -300,7 +299,7 @@ namespace BWSAL
         s->second.m_mode = ScoutData::Idle;
         if ( m_debugMode )
         {
-          BWAPI::Broodwar->printf( "Sucessfully scouted ( %d, %d )", exploredBaseLocation->getPosition().x(), exploredBaseLocation->getPosition().y() );
+          BWAPI::Broodwar->printf( "Sucessfully scouted ( %d, %d )", exploredBaseLocation->getPosition().x, exploredBaseLocation->getPosition().y );
         }
       }
     }
@@ -308,13 +307,13 @@ namespace BWSAL
     // Set scouts to scout.
     if ( m_baseLocationsToScout.size() > 0 ) // are there still positions to scout?
     {
-      for ( std::map< BWAPI::Unit*, ScoutData >::iterator s = m_scouts.begin(); s != m_scouts.end(); s++ )
+      for ( std::map< BWAPI::Unit, ScoutData >::iterator s = m_scouts.begin(); s != m_scouts.end(); s++ )
       {
         if ( s->second.m_mode == ScoutData::Idle )
         {
           double minDist = 100000000;
           BWTA::BaseLocation* target = NULL;
-          foreach( BWTA::BaseLocation* bl, m_baseLocationsToScout )
+          for( BWTA::BaseLocation* bl : m_baseLocationsToScout )
           {
             double distance = s->first->getPosition().getDistance( bl->getPosition() );
             if ( distance < minDist )
@@ -331,7 +330,7 @@ namespace BWSAL
             m_baseLocationsToScout.remove( target );
             if ( m_debugMode )
             {
-              BWAPI::Broodwar->printf( "Scouting ( %d, %d )", target->getPosition().x(), target->getPosition().y() );
+              BWAPI::Broodwar->printf( "Scouting ( %d, %d )", target->getPosition().x, target->getPosition().y );
             }
           }
         }

@@ -39,9 +39,9 @@ namespace BWSAL
 
   void ReservedMap::reserveTiles( BWAPI::TilePosition position, BWAPI::UnitType type, int width, int height )
   {
-    for ( int x = position.x(); x < position.x() + width && x < (int)m_reservedMap.getWidth(); x++ )
+    for ( int x = position.x; x < position.x + width && x < (int)m_reservedMap.getWidth(); x++ )
     {
-      for ( int y = position.y(); y < position.y() + height && y < (int)m_reservedMap.getHeight(); y++ )
+      for ( int y = position.y; y < position.y + height && y < (int)m_reservedMap.getHeight(); y++ )
       {
         m_reservedMap[x][y] = type;
       }
@@ -50,9 +50,9 @@ namespace BWSAL
 
   void ReservedMap::freeTiles( BWAPI::TilePosition position, int width, int height )
   {
-    for ( int x = position.x(); x < position.x() + width && x < (int)m_reservedMap.getWidth(); x++ )
+    for ( int x = position.x; x < position.x + width && x < (int)m_reservedMap.getWidth(); x++ )
     {
-      for ( int y = position.y(); y < position.y() + height && y < (int)m_reservedMap.getHeight(); y++ )
+      for ( int y = position.y; y < position.y + height && y < (int)m_reservedMap.getHeight(); y++ )
       {
         m_reservedMap[x][y] = BWAPI::UnitTypes::None;
       }
@@ -66,23 +66,23 @@ namespace BWSAL
 
   bool ReservedMap::isReserved( BWAPI::TilePosition p ) const
   {
-    return m_reservedMap[p.x()][p.y()] != BWAPI::UnitTypes::None;
+    return m_reservedMap[p.x][p.y] != BWAPI::UnitTypes::None;
   }
 
-  bool ReservedMap::canBuildHere( BWAPI::Unit* builder, BWAPI::TilePosition position, BWAPI::UnitType type ) const
+  bool ReservedMap::canBuildHere( BWAPI::Unit builder, BWAPI::TilePosition position, BWAPI::UnitType type ) const
   {
     if ( type.isAddon() )
     {
       type = type.whatBuilds().first;
     }
     // returns true if we can build this type of unit here. Takes into account reserved tiles.
-    if ( !BWAPI::Broodwar->canBuildHere( builder, position, type ) )
+	if (!BWAPI::Broodwar->canBuildHere(position, type, builder))
     {
       return false;
     }
-    for ( int x = position.x(); x < position.x() + type.tileWidth(); x++ )
+    for ( int x = position.x; x < position.x + type.tileWidth(); x++ )
     {
-      for ( int y = position.y(); y < position.y() + type.tileHeight(); y++ )
+      for ( int y = position.y; y < position.y + type.tileHeight(); y++ )
       {
         if ( m_reservedMap[x][y] != BWAPI::UnitTypes::None )
         {
@@ -100,6 +100,6 @@ namespace BWSAL
 
   BWAPI::UnitType ReservedMap::getReservedType( BWAPI::TilePosition p ) const
   {
-    return m_reservedMap[p.x()][p.y()];
+    return m_reservedMap[p.x][p.y];
   }
 }

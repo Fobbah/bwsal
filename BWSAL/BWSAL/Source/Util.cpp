@@ -39,7 +39,7 @@ namespace BWSAL
     va_end( ap );
     log( "%s %s", t->toString().c_str(), taskBuffer );
   }
-  bool resourceDepotIsCompleted( BWAPI::Unit* u )
+  bool resourceDepotIsCompleted( BWAPI::Unit u )
   {
     return ( u->isCompleted() || 
              ( u->getType().isResourceDepot() && u->isMorphing() && u->getBuildType() != BWAPI::UnitTypes::Zerg_Hatchery ) );

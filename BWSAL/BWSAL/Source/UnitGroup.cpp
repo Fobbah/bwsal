@@ -1,10 +1,9 @@
 #include <BWSAL/UnitGroup.h>
 #include <BWAPI/Unit.h>
-#include <Util/Foreach.h>
 
 namespace BWSAL
 {
-  bool passesFlag( BWAPI::Unit* u, int f )
+  bool passesFlag( BWAPI::Unit u, int f )
   {
     if ( f< 0 )
       return !passesFlag( u, - f );
@@ -143,7 +142,7 @@ namespace BWSAL
         if ( u->isUnderStorm() ) return true;
       break;
       case isUnpowered:
-        if ( u->isUnpowered() ) return true;
+        if ( !u->isPowered() ) return true;
       break;
       case isUpgrading:
         if ( u->isUpgrading() ) return true;
@@ -787,7 +786,7 @@ namespace BWSAL
     return false;
   }
 
-  double getAttribute( BWAPI::Unit* u, FliterAttributeScalar a )
+  double getAttribute( BWAPI::Unit u, FliterAttributeScalar a )
   {
     switch( a )
     {
@@ -852,28 +851,28 @@ namespace BWSAL
         return u->getStimTimer();
       break;
       case PositionX:
-        return u->getPosition().x();
+        return u->getPosition().x;
       break;
       case PositionY:
-        return u->getPosition().y();
+        return u->getPosition().y;
       break;
       case InitialPositionX:
-        return u->getInitialPosition().x();
+        return u->getInitialPosition().x;
       break;
       case InitialPositionY:
-        return u->getInitialPosition().y();
+        return u->getInitialPosition().y;
       break;
       case TilePositionX:
-        return u->getTilePosition().x();
+        return u->getTilePosition().x;
       break;
       case TilePositionY:
-        return u->getTilePosition().y();
+        return u->getTilePosition().y;
       break;
       case InitialTilePositionX:
-        return u->getInitialTilePosition().x();
+        return u->getInitialTilePosition().x;
       break;
       case InitialTilePositionY:
-        return u->getInitialTilePosition().y();
+        return u->getInitialTilePosition().y;
       break;
       case Angle:
         return u->getAngle();
@@ -885,10 +884,10 @@ namespace BWSAL
         return u->getVelocityY();
       break;
       case TargetPositionX:
-        return u->getTargetPosition().x();
+        return u->getTargetPosition().x;
       break;
       case TargetPositionY:
-        return u->getTargetPosition().y();
+        return u->getTargetPosition().y;
       break;
       case OrderTimer:
         return u->getOrderTimer();
@@ -921,16 +920,16 @@ namespace BWSAL
         return u->getRemainingUpgradeTime();
       break;
       case RallyPositionX:
-        return u->getRallyPosition().x();
+        return u->getRallyPosition().x;
       break;
       case RallyPositionY:
-        return u->getRallyPosition().y();
+        return u->getRallyPosition().y;
       break;
     }
     return 0;
   }
 
-  BWAPI::Unit* getUnit( BWAPI::Unit* u, FilterAttributeUnit a )
+  BWAPI::Unit getUnit( BWAPI::Unit u, FilterAttributeUnit a )
   {
     switch( a )
     {
@@ -983,7 +982,7 @@ namespace BWSAL
   UnitGroup UnitGroup::operator()( int f1 ) const
   {
     UnitGroup result;
-    foreach( BWAPI::Unit* i, *this )
+    for( BWAPI::Unit i : *this )
     {
       if ( passesFlag( i, f1 ) )
       {
@@ -996,7 +995,7 @@ namespace BWSAL
   UnitGroup UnitGroup::operator()( int f1, int f2 ) const
   {
     UnitGroup result;
-    foreach( BWAPI::Unit* i, *this )
+    for( BWAPI::Unit i : *this )
     {
       if ( passesFlag( i, f1 ) || passesFlag( i, f2 ) )
       {
@@ -1009,7 +1008,7 @@ namespace BWSAL
   UnitGroup UnitGroup::operator()( int f1, int f2, int f3 ) const
   {
     UnitGroup result;
-    foreach( BWAPI::Unit* i, *this )
+    for( BWAPI::Unit i : *this )
     {
       if ( passesFlag( i, f1 ) || passesFlag( i, f2 ) || passesFlag( i, f3 ) )
       {
@@ -1022,7 +1021,7 @@ namespace BWSAL
   UnitGroup UnitGroup::operator()( int f1, int f2, int f3, int f4 ) const
   {
     UnitGroup result;
-    foreach( BWAPI::Unit* i, *this )
+    for( BWAPI::Unit i : *this )
     {
       if ( passesFlag( i, f1 ) || passesFlag( i, f2 ) || passesFlag( i, f3 ) || passesFlag( i, f4 ) )
       {
@@ -1035,7 +1034,7 @@ namespace BWSAL
   UnitGroup UnitGroup::operator()( int f1, int f2, int f3, int f4, int f5 ) const
   {
     UnitGroup result;
-    foreach( BWAPI::Unit* i, *this )
+    for( BWAPI::Unit i : *this )
     {
       if ( passesFlag( i, f1 ) || passesFlag( i, f2 ) || passesFlag( i, f3 ) || passesFlag( i, f4 ) || passesFlag( i, f5 ) )
       {
@@ -1049,7 +1048,7 @@ namespace BWSAL
   {
     UnitGroup result;
     std::string cmp( compare );
-    foreach( BWAPI::Unit* i, *this )
+    for( BWAPI::Unit i : *this )
     {
       double val = getAttribute( i, a );
       bool passes = false;
@@ -1076,7 +1075,7 @@ namespace BWSAL
   {
     UnitGroup result;
     std::string cmp( compare );
-    foreach( BWAPI::Unit* i, *this )
+    for( BWAPI::Unit i : *this )
     {
       int val = (int)getAttribute( i, a );
       bool passes = false;
@@ -1099,10 +1098,10 @@ namespace BWSAL
     }
     return result;
   }
-  UnitGroup UnitGroup::operator()( BWAPI::Player* player ) const
+  UnitGroup UnitGroup::operator()( BWAPI::Player player ) const
   {
     UnitGroup result;
-    foreach( BWAPI::Unit* i, *this )
+    for( BWAPI::Unit i : *this )
     {
       if ( i->getPlayer() == player )
       {
@@ -1111,10 +1110,10 @@ namespace BWSAL
     }
     return result;
   }
-  UnitGroup UnitGroup::operator()( FilterAttributeUnit a, BWAPI::Unit* unit ) const
+  UnitGroup UnitGroup::operator()( FilterAttributeUnit a, BWAPI::Unit unit ) const
   {
     UnitGroup result;
-    foreach( BWAPI::Unit* i, *this )
+    for( BWAPI::Unit i : *this )
     {
       if ( getUnit( i, a ) == unit )
       {
@@ -1126,7 +1125,7 @@ namespace BWSAL
   UnitGroup UnitGroup::operator()( FilterAttributeType a, BWAPI::UnitType type ) const
   {
     UnitGroup result;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       bool passes = false;
       if ( a == GetType )
@@ -1146,7 +1145,7 @@ namespace BWSAL
   UnitGroup UnitGroup::operator()( FilterAttributeType a, BWAPI::TechType type ) const
   {
     UnitGroup result;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       bool passes = false;
       if ( a == GetTech )
@@ -1160,7 +1159,7 @@ namespace BWSAL
   UnitGroup UnitGroup::operator()( FilterAttributeOrder a, BWAPI::Order type ) const
   {
     UnitGroup result;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       bool passes = false;
       if ( a == GetOrder )
@@ -1177,7 +1176,7 @@ namespace BWSAL
   UnitGroup UnitGroup::operator()( FilterAttributeType a, BWAPI::UpgradeType type ) const
   {
     UnitGroup result;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       bool passes = false;
       if ( a == GetUpgrade )
@@ -1191,7 +1190,7 @@ namespace BWSAL
   UnitGroup UnitGroup::operator()( FilterAttributePosition a, BWAPI::Position position ) const
   {
     UnitGroup result;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       bool passes = false;
       if ( a == GetPosition )
@@ -1214,7 +1213,7 @@ namespace BWSAL
   UnitGroup UnitGroup::operator()( FilterAttributeTilePosition a, BWAPI::TilePosition position ) const
   {
     UnitGroup result;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       bool passes = false;
       if ( a == GetPosition )
@@ -1232,7 +1231,7 @@ namespace BWSAL
   UnitGroup UnitGroup::not( int f1 ) const
   {
     UnitGroup result;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       if ( !( passesFlag( *i, f1 ) ) )
         result.insert( *i );
@@ -1243,7 +1242,7 @@ namespace BWSAL
   UnitGroup UnitGroup::not( int f1, int f2 ) const
   {
     UnitGroup result;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       if ( !( passesFlag( *i, f1 ) || passesFlag( *i, f2 ) ) )
         result.insert( *i );
@@ -1254,7 +1253,7 @@ namespace BWSAL
   UnitGroup UnitGroup::not( int f1, int f2, int f3 ) const
   {
     UnitGroup result;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       if ( !( passesFlag( *i, f1 ) || passesFlag( *i, f2 ) || passesFlag( *i, f3 ) ) )
         result.insert( *i );
@@ -1265,7 +1264,7 @@ namespace BWSAL
   UnitGroup UnitGroup::not( int f1, int f2, int f3, int f4 ) const
   {
     UnitGroup result;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       if ( !( passesFlag( *i, f1 ) || passesFlag( *i, f2 ) || passesFlag( *i, f3 ) || passesFlag( *i, f4 ) ) )
         result.insert( *i );
@@ -1276,7 +1275,7 @@ namespace BWSAL
   UnitGroup UnitGroup::not( int f1, int f2, int f3, int f4, int f5 ) const
   {
     UnitGroup result;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       if ( !( passesFlag( *i, f1 ) || passesFlag( *i, f2 ) || passesFlag( *i, f3 ) || passesFlag( *i, f4 ) || passesFlag( *i, f5 ) ) )
         result.insert( *i );
@@ -1289,7 +1288,7 @@ namespace BWSAL
   {
     UnitGroup result;
     std::string cmp( compare );
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       double val = getAttribute( *i, a );
       bool passes = false;
@@ -1311,7 +1310,7 @@ namespace BWSAL
   {
     UnitGroup result;
     std::string cmp( compare );
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       int val = (int)getAttribute( *i, a );
       bool passes = false;
@@ -1329,22 +1328,22 @@ namespace BWSAL
     }
     return result;
   }
-  UnitGroup UnitGroup::not( BWAPI::Player* player ) const
+  UnitGroup UnitGroup::not( BWAPI::Player player ) const
   {
     UnitGroup result;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       if ( ( *i )->getPlayer() != player )
         result.insert( *i );
     }
     return result;
   }
-  UnitGroup UnitGroup::not( FilterAttributeUnit a, BWAPI::Unit* unit ) const
+  UnitGroup UnitGroup::not( FilterAttributeUnit a, BWAPI::Unit unit ) const
   {
     UnitGroup result;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
-      BWAPI::Unit* target = getUnit( *i, a );
+      BWAPI::Unit target = getUnit( *i, a );
       if ( target != unit )
         result.insert( *i );
     }
@@ -1353,7 +1352,7 @@ namespace BWSAL
   UnitGroup UnitGroup::not( FilterAttributeType a, BWAPI::UnitType type ) const
   {
     UnitGroup result;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       bool passes = false;
       if ( a == GetType )
@@ -1373,7 +1372,7 @@ namespace BWSAL
   UnitGroup UnitGroup::not( FilterAttributeType a, BWAPI::TechType type ) const
   {
     UnitGroup result;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       bool passes = false;
       if ( a == GetTech )
@@ -1387,7 +1386,7 @@ namespace BWSAL
   UnitGroup UnitGroup::not( FilterAttributeOrder a, BWAPI::Order type ) const
   {
     UnitGroup result;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       bool passes = false;
       if ( a == GetOrder )
@@ -1404,7 +1403,7 @@ namespace BWSAL
   UnitGroup UnitGroup::not( FilterAttributeType a, BWAPI::UpgradeType type ) const
   {
     UnitGroup result;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       bool passes = false;
       if ( a == GetUpgrade )
@@ -1418,7 +1417,7 @@ namespace BWSAL
   UnitGroup UnitGroup::not( FilterAttributePosition a, BWAPI::Position position ) const
   {
     UnitGroup result;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       bool passes = false;
       if ( a == GetPosition )
@@ -1441,7 +1440,7 @@ namespace BWSAL
   UnitGroup UnitGroup::not( FilterAttributeTilePosition a, BWAPI::TilePosition position ) const
   {
     UnitGroup result;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       bool passes = false;
       if ( a == GetPosition )
@@ -1459,7 +1458,7 @@ namespace BWSAL
   UnitGroup UnitGroup::inRadius( double radius, BWAPI::Position position ) const
   {
     UnitGroup result;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       if ( ( *i )->getDistance( position ) <= radius )
         result.insert( *i );
@@ -1470,7 +1469,7 @@ namespace BWSAL
   UnitGroup UnitGroup::inRegion( BWTA::Region* region ) const
   {
     UnitGroup result;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       if ( BWTA::getRegion( ( *i )->getTilePosition() ) == region )
         result.insert( *i );
@@ -1480,7 +1479,7 @@ namespace BWSAL
   UnitGroup UnitGroup::onlyNearestChokepoint( BWTA::Chokepoint* choke ) const
   {
     UnitGroup result;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       if ( BWTA::getNearestChokepoint( ( *i )->getTilePosition() ) == choke )
         result.insert( *i );
@@ -1491,7 +1490,7 @@ namespace BWSAL
   UnitGroup UnitGroup::onlyNearestBaseLocation( BWTA::BaseLocation* location ) const
   {
     UnitGroup result;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       if ( BWTA::getNearestBaseLocation( ( *i )->getTilePosition() ) == location )
         result.insert( *i );
@@ -1501,7 +1500,7 @@ namespace BWSAL
   UnitGroup UnitGroup::onlyNearestUnwalkablePolygon( BWTA::Polygon* polygon ) const
   {
     UnitGroup result;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       if ( BWTA::getNearestUnwalkablePolygon( ( *i )->getTilePosition() ) == polygon )
         result.insert( *i );
@@ -1511,7 +1510,7 @@ namespace BWSAL
 
   UnitGroup& UnitGroup::operator += ( const UnitGroup& other )
   {
-    for ( std::set< BWAPI::Unit* >::const_iterator i = other.begin(); i != other.end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = other.begin(); i != other.end(); i++ )
     {
       this->insert( *i );
     }
@@ -1519,8 +1518,8 @@ namespace BWSAL
   }
   UnitGroup& UnitGroup::operator *= ( const UnitGroup& other )
   {
-    std::set< BWAPI::Unit* >::iterator i2;
-    for ( std::set< BWAPI::Unit* >::iterator i = this->begin(); i != this->end(); i = i2 )
+    std::set< BWAPI::Unit >::iterator i2;
+    for ( std::set< BWAPI::Unit >::iterator i = this->begin(); i != this->end(); i = i2 )
     {
       i2 = i;
       i2++;
@@ -1532,7 +1531,7 @@ namespace BWSAL
   UnitGroup& UnitGroup::operator ^= ( const UnitGroup& other )
   {
     UnitGroup result = *this;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = other.begin(); i != other.end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = other.begin(); i != other.end(); i++ )
     {
       if ( this->contains( *i ) )
         this->erase( *i );
@@ -1543,16 +1542,16 @@ namespace BWSAL
   }
   UnitGroup& UnitGroup::operator -= ( const UnitGroup& other )
   {
-    for ( std::set< BWAPI::Unit* >::const_iterator i = other.begin(); i != other.end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = other.begin(); i != other.end(); i++ )
       this->erase( *i );
     return *this;
   }
 
-  BWAPI::Unit* UnitGroup::getNearest( BWAPI::Position position ) const
+  BWAPI::Unit UnitGroup::getNearest( BWAPI::Position position ) const
   {
     if ( this->empty() ) return NULL;
-    std::set< BWAPI::Unit* >::const_iterator i = this->begin();
-    BWAPI::Unit* result = *i;
+    std::set< BWAPI::Unit >::const_iterator i = this->begin();
+    BWAPI::Unit result = *i;
     double d = ( *i )->getDistance( position );
     i++;
     for (; i != this->end(); i++ )
@@ -1567,7 +1566,7 @@ namespace BWSAL
     return result;
   }
 
-  bool UnitGroup::contains( BWAPI::Unit* u ) const
+  bool UnitGroup::contains( BWAPI::Unit u ) const
   {
     return this->find( u ) != this->end();
   }
@@ -1581,14 +1580,14 @@ namespace BWSAL
     int count = 0;
     double x = 0;
     double y = 0;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       BWAPI::Position p( ( *i )->getPosition() );
       if ( p != BWAPI::Positions::None && p != BWAPI::Positions::Unknown )
       {
         count++;
-        x += p.x();
-        y += p.y();
+        x += p.x;
+        y += p.y;
       }
     }
     if ( count == 0 )
@@ -1601,16 +1600,16 @@ namespace BWSAL
   bool UnitGroup::attack( BWAPI::Position position, bool shiftQueueCommand ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->attack( position, shiftQueueCommand );
     }
     return retval;
   }
-  bool UnitGroup::attack( BWAPI::Unit* target, bool shiftQueueCommand ) const
+  bool UnitGroup::attack( BWAPI::Unit target, bool shiftQueueCommand ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->attack( target, shiftQueueCommand );
     }
@@ -1619,16 +1618,16 @@ namespace BWSAL
   bool UnitGroup::build( BWAPI::TilePosition position, BWAPI::UnitType type ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
-      retval = retval && ( *i )->build( position, type );
+		retval = retval && (*i)->build(type, position);
     }
     return retval;
   }
   bool UnitGroup::buildAddon( BWAPI::UnitType type ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->buildAddon( type );
     }
@@ -1637,7 +1636,7 @@ namespace BWSAL
   bool UnitGroup::train( BWAPI::UnitType type ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->train( type );
     }
@@ -1646,7 +1645,7 @@ namespace BWSAL
   bool UnitGroup::morph( BWAPI::UnitType type ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->morph( type );
     }
@@ -1655,7 +1654,7 @@ namespace BWSAL
   bool UnitGroup::research( BWAPI::TechType tech ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->research( tech );
     }
@@ -1664,7 +1663,7 @@ namespace BWSAL
   bool UnitGroup::upgrade( BWAPI::UpgradeType upgrade ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->upgrade( upgrade );
     }
@@ -1673,16 +1672,16 @@ namespace BWSAL
   bool UnitGroup::setRallyPoint( BWAPI::Position target ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->setRallyPoint( target );
     }
     return retval;
   }
-  bool UnitGroup::setRallyPoint( BWAPI::Unit* target ) const
+  bool UnitGroup::setRallyPoint( BWAPI::Unit target ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->setRallyPoint( target );
     }
@@ -1691,7 +1690,7 @@ namespace BWSAL
   bool UnitGroup::move( BWAPI::Position position, bool shiftQueueCommand ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->move( position, shiftQueueCommand );
     }
@@ -1700,7 +1699,7 @@ namespace BWSAL
   bool UnitGroup::patrol( BWAPI::Position position, bool shiftQueueCommand ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->patrol( position, shiftQueueCommand );
     }
@@ -1709,7 +1708,7 @@ namespace BWSAL
   bool UnitGroup::holdPosition( bool shiftQueueCommand ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->holdPosition( shiftQueueCommand );
     }
@@ -1718,25 +1717,25 @@ namespace BWSAL
   bool UnitGroup::stop( bool shiftQueueCommand ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->stop( shiftQueueCommand );
     }
     return retval;
   }
-  bool UnitGroup::follow( BWAPI::Unit* target, bool shiftQueueCommand ) const
+  bool UnitGroup::follow( BWAPI::Unit target, bool shiftQueueCommand ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->follow( target, shiftQueueCommand );
     }
     return retval;
   }
-  bool UnitGroup::gather( BWAPI::Unit* target, bool shiftQueueCommand ) const
+  bool UnitGroup::gather( BWAPI::Unit target, bool shiftQueueCommand ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->gather( target, shiftQueueCommand );
     }
@@ -1745,16 +1744,16 @@ namespace BWSAL
   bool UnitGroup::returnCargo( bool shiftQueueCommand ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->returnCargo( shiftQueueCommand );
     }
     return retval;
   }
-  bool UnitGroup::repair( BWAPI::Unit* target, bool shiftQueueCommand ) const
+  bool UnitGroup::repair( BWAPI::Unit target, bool shiftQueueCommand ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->repair( target, shiftQueueCommand );
     }
@@ -1763,7 +1762,7 @@ namespace BWSAL
   bool UnitGroup::burrow() const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->burrow();
     }
@@ -1772,7 +1771,7 @@ namespace BWSAL
   bool UnitGroup::unburrow() const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->unburrow();
     }
@@ -1781,7 +1780,7 @@ namespace BWSAL
   bool UnitGroup::cloak() const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->cloak();
     }
@@ -1790,7 +1789,7 @@ namespace BWSAL
   bool UnitGroup::decloak() const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->decloak();
     }
@@ -1799,7 +1798,7 @@ namespace BWSAL
   bool UnitGroup::siege() const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->siege();
     }
@@ -1808,7 +1807,7 @@ namespace BWSAL
   bool UnitGroup::unsiege() const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->unsiege();
     }
@@ -1817,7 +1816,7 @@ namespace BWSAL
   bool UnitGroup::lift() const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->lift();
     }
@@ -1826,25 +1825,25 @@ namespace BWSAL
   bool UnitGroup::land( BWAPI::TilePosition position ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->land( position );
     }
     return retval;
   }
-  bool UnitGroup::load( BWAPI::Unit* target, bool shiftQueueCommand ) const
+  bool UnitGroup::load( BWAPI::Unit target, bool shiftQueueCommand ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->load( target, shiftQueueCommand );
     }
     return retval;
   }
-  bool UnitGroup::unload( BWAPI::Unit* target ) const
+  bool UnitGroup::unload( BWAPI::Unit target ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->unload( target );
     }
@@ -1853,7 +1852,7 @@ namespace BWSAL
   bool UnitGroup::unloadAll( bool shiftQueueCommand ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->unloadAll( shiftQueueCommand );
     }
@@ -1862,7 +1861,7 @@ namespace BWSAL
   bool UnitGroup::unloadAll( BWAPI::Position position, bool shiftQueueCommand ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->unloadAll( position, shiftQueueCommand );
     }
@@ -1871,16 +1870,16 @@ namespace BWSAL
   bool UnitGroup::rightClick( BWAPI::Position position, bool shiftQueueCommand ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->rightClick( position, shiftQueueCommand );
     }
     return retval;
   }
-  bool UnitGroup::rightClick( BWAPI::Unit* target, bool shiftQueueCommand ) const
+  bool UnitGroup::rightClick( BWAPI::Unit target, bool shiftQueueCommand ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->rightClick( target, shiftQueueCommand );
     }
@@ -1889,7 +1888,7 @@ namespace BWSAL
   bool UnitGroup::haltConstruction() const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->haltConstruction();
     }
@@ -1898,7 +1897,7 @@ namespace BWSAL
   bool UnitGroup::cancelConstruction() const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->cancelConstruction();
     }
@@ -1907,7 +1906,7 @@ namespace BWSAL
   bool UnitGroup::cancelAddon() const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->cancelAddon();
     }
@@ -1916,7 +1915,7 @@ namespace BWSAL
   bool UnitGroup::cancelTrain( int slot ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->cancelTrain( slot );
     }
@@ -1925,7 +1924,7 @@ namespace BWSAL
   bool UnitGroup::cancelMorph() const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->cancelMorph();
     }
@@ -1934,7 +1933,7 @@ namespace BWSAL
   bool UnitGroup::cancelResearch() const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->cancelResearch();
     }
@@ -1943,7 +1942,7 @@ namespace BWSAL
   bool UnitGroup::cancelUpgrade() const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->cancelUpgrade();
     }
@@ -1952,7 +1951,7 @@ namespace BWSAL
   bool UnitGroup::useTech( BWAPI::TechType tech ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->useTech( tech );
     }
@@ -1961,16 +1960,16 @@ namespace BWSAL
   bool UnitGroup::useTech( BWAPI::TechType tech, BWAPI::Position position ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->useTech( tech, position );
     }
     return retval;
   }
-  bool UnitGroup::useTech( BWAPI::TechType tech, BWAPI::Unit* target ) const
+  bool UnitGroup::useTech( BWAPI::TechType tech, BWAPI::Unit target ) const
   {
     bool retval = true;
-    for ( std::set< BWAPI::Unit* >::const_iterator i = this->begin(); i != this->end(); i++ )
+    for ( std::set< BWAPI::Unit >::const_iterator i = this->begin(); i != this->end(); i++ )
     {
       retval = retval && ( *i )->useTech( tech, target );
     }

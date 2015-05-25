@@ -4,7 +4,6 @@
 #include <BWSAL/BuildEventTimeline.h>
 #include <BWSAL/MacroTask.h>
 #include <BWSAL/Task.h>
-#include <Util/Foreach.h>
 #include <BWSAL/util.h>
 namespace BWSAL
 {
@@ -66,7 +65,7 @@ namespace BWSAL
       if ( supplyBlockTime != NEVER )
       {
         bool resolvedSupplyBlock = false;
-        foreach( MacroTask* mt, m_incompleteTasks )
+        for( MacroTask* mt : m_incompleteTasks )
         {
           Task* t = mt->getTasks().front();
           if ( t->getEarliestStartTime() > supplyBlockTime - m_buildTime )
@@ -80,7 +79,7 @@ namespace BWSAL
         if ( !resolvedSupplyBlock )
         {
           bool allScheduledBefore = true;
-          foreach( MacroTask* mt, m_incompleteTasks )
+          for( MacroTask* mt : m_incompleteTasks )
           {
             Task* t = mt->getTasks().front();
             if ( t->getRunTime() + m_buildTime >= supplyBlockTime )

@@ -1,6 +1,5 @@
 #include <BWSAL/TaskState.h>
 #include <BWSAL/Util.h>
-#include <Util/Foreach.h>
 #include <BWAPI.h>
 #include <algorithm>
 namespace BWSAL
@@ -65,7 +64,7 @@ namespace BWSAL
       taskStateSet.insert( Halted );
       taskStateSet.insert( Completed );
       taskStateSet.insert( None );
-      foreach( TaskState i, taskStateSet )
+      for( TaskState i : taskStateSet )
       {
         std::string name = i.getName();
         fixName( name );

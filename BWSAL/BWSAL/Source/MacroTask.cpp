@@ -1,5 +1,4 @@
 #include <BWSAL/MacroTask.h>
-#include <Util/Foreach.h>
 namespace BWSAL
 {
   MacroTask::MacroTask(BuildType type, int priority, bool isAdditional, int count, BWAPI::TilePosition seedLocation )
@@ -65,7 +64,7 @@ namespace BWSAL
   int MacroTask::computeRemainingCount()
   {
     m_remainingCount = 0;
-    foreach( Task* t, m_tasks )
+    for( Task* t : m_tasks )
     {
       if ( t->isWaiting() && !t->isScheduledThisFrame() )
       {
@@ -110,7 +109,7 @@ namespace BWSAL
 
   Task* MacroTask::getNextUnscheduledTask() const
   {
-    foreach( Task* t, m_tasks)
+    for( Task* t : m_tasks)
     {
       if ( t->isWaiting() && t->isScheduledThisFrame() == false )
       {
@@ -123,7 +122,7 @@ namespace BWSAL
   int MacroTask::getWaitingCount() const
   {
     int waitingCount = 0;
-    foreach( Task* t, m_tasks )
+    for( Task* t : m_tasks )
     {
       if ( t->isWaiting() )
       {
@@ -136,7 +135,7 @@ namespace BWSAL
   int MacroTask::getIncompleteCount() const
   {
     int incompleteCount = 0;
-    foreach( Task* t, m_tasks )
+    for( Task* t : m_tasks )
     {
       if ( !t->isCompleted() )
       {

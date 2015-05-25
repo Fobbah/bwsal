@@ -1,7 +1,6 @@
 #include <BWSAL/BaseManager.h>
 #include <BWSAL/Base.h>
 #include <BWSAL/BorderManager.h>
-#include <Util/Foreach.h>
 #include <BWAPI.h>
 namespace BWSAL
 {
@@ -43,14 +42,14 @@ namespace BWSAL
   void BaseManager::onFrame()
   {
     // check to see if any new base locations need to be added
-    foreach( BWTA::BaseLocation* location, BWTA::getBaseLocations() )
+	  for (BWTA::BaseLocation* location : BWTA::getBaseLocations())
     {
       if ( m_location2base.find( location ) == m_location2base.end() )
       {
         // There is no base currently associated with this base location
         // so look for a resource depot on it
         BWAPI::TilePosition tile = location->getTilePosition();
-        foreach( BWAPI::Unit* u, BWAPI::Broodwar->getUnitsOnTile( tile.x(), tile.y() ) )
+		for (BWAPI::Unit u : BWAPI::Broodwar->getUnitsOnTile(tile.x, tile.y))
         {
           if ( u->getPlayer() == BWAPI::Broodwar->self() && u->getType().isResourceDepot() )
           {
@@ -65,7 +64,7 @@ namespace BWSAL
       }
     }
     // Update each base
-    foreach( Base* mb, m_allBases )
+    for( Base* mb : m_allBases )
     {
       mb->update();
       if ( mb->isActive() )
@@ -101,7 +100,7 @@ namespace BWSAL
     BWTA::BaseLocation* location = NULL;
     BWTA::BaseLocation* home = BWTA::getStartLocation( BWAPI::Broodwar->self() );
     double minDist = -1;
-    foreach( BWTA::BaseLocation* bl, BWTA::getBaseLocations() )
+	for (BWTA::BaseLocation* bl : BWTA::getBaseLocations())
     {
       double dist = home->getGroundDistance( bl );
       if (dist > 0 && getBase( bl ) == NULL )
@@ -192,7 +191,7 @@ namespace BWSAL
     return "BaseManager";
   }
 
-  void BaseManager::onUnitDestroy( BWAPI::Unit* unit )
+  void BaseManager::onUnitDestroy( BWAPI::Unit unit )
   {
     // Sanity check
     if ( unit == NULL )
@@ -201,7 +200,7 @@ namespace BWSAL
     }
 
     // Tell all our bases that this unit has been destroyed
-    foreach( Base* b, m_allBases )
+	for (Base* b : m_allBases)
     {
       b->onUnitDestroy( unit );
     }

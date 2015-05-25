@@ -7,7 +7,6 @@
 #include <BWSAL/ReservedMap.h>
 #include <BWSAL/BuildEventTimeline.h>
 #include <BWSAL/Util.h>
-#include <Util/Foreach.h>
 #include <BWAPI.h>
 #include <algorithm>
 namespace BWSAL
@@ -86,8 +85,8 @@ namespace BWSAL
       updateTask( *i );
       if ( (*i)->isWaiting() || (*i)->isCompleted() )
       {
-        m_runningTasks.erase( i );
-        m_runningCount[(*i)->getBuildType()]--;
+		  m_runningCount[(*i)->getBuildType()]--;
+		  m_runningTasks.erase( i );
       }
     }
   }
@@ -95,13 +94,13 @@ namespace BWSAL
   void TaskExecutor::updateTask( Task* t )
   {
     BuildUnit*         builder = NULL;
-    BWAPI::Unit* BWAPI_builder = NULL;
+    BWAPI::Unit BWAPI_builder = NULL;
     BuildUnit*         secondBuilder = NULL;
-    BWAPI::Unit* BWAPI_secondBuilder = NULL;
+    BWAPI::Unit BWAPI_secondBuilder = NULL;
     BuildUnit*         createdUnit = NULL;
-    BWAPI::Unit* BWAPI_createdUnit = NULL;
+    BWAPI::Unit BWAPI_createdUnit = NULL;
     BuildUnit*         secondCreatedUnit = NULL;
-    BWAPI::Unit* BWAPI_secondCreatedUnit = NULL;
+    BWAPI::Unit BWAPI_secondCreatedUnit = NULL;
 
     BuildType buildType = t->getBuildType();
 
@@ -120,8 +119,8 @@ namespace BWSAL
     if ( BWAPI_builder != NULL && buildType.requiresLarva() && BWAPI_builder->getType().producesLarva() )
     {
       // We need to find a larva
-      std::set< BWAPI::Unit* > larva = BWAPI_builder->getLarva();
-      foreach( BWAPI::Unit* u, larva )
+      const BWAPI::Unitset larva = BWAPI_builder->getLarva();
+      for( BWAPI::Unit u : larva )
       {
         // We want a larva that hasn't been claimed by any other tasks
         if ( BuildUnit::getBuildUnitIfExists( u ) == NULL )
@@ -151,7 +150,7 @@ namespace BWSAL
     if ( BWAPI_builder != NULL && BWAPI_builder->exists() == false && buildType == BuildTypes::Zerg_Extractor )
     {
       logTask( t, "Need to find extractor" );
-      for each ( BWAPI::Unit* u in BWAPI::Broodwar->getUnitsInRadius( BWAPI::Position( t->getBuildLocation() ), 100 ) )
+      for each ( BWAPI::Unit u in BWAPI::Broodwar->getUnitsInRadius( BWAPI::Position( t->getBuildLocation() ), 100 ) )
       {
         if ( u->getType() == BWAPI::UnitTypes::Zerg_Extractor )
         {
@@ -409,7 +408,7 @@ namespace BWSAL
         }
       }
       if ( t->getBuildLocation() != BWAPI::TilePositions::None &&
-           !BWAPI::Broodwar->canBuildHere( BWAPI_builder, t->getBuildLocation(), buildType.getUnitType() ) &&
+		  !BWAPI::Broodwar->canBuildHere(t->getBuildLocation(), buildType.getUnitType(), BWAPI_builder) &&
            t->isRelocatable() )
       {
         if ( !buildType.requiresPsi() || BWAPI::Broodwar->self()->completedUnitCount( BWAPI::UnitTypes::Protoss_Pylon ) > 0 )
@@ -440,8 +439,8 @@ namespace BWSAL
               if ( buildType.build( BWAPI_builder, BWAPI_secondBuilder, t->getBuildLocation() ) == false )
               {
                 BWAPI::Position buildPosition( t->getBuildLocation() );
-                buildPosition.x() += buildType.getUnitType().tileWidth() * 16;
-                buildPosition.y() += buildType.getUnitType().tileHeight() * 16;
+                buildPosition.x += buildType.getUnitType().tileWidth() * 16;
+                buildPosition.y += buildType.getUnitType().tileHeight() * 16;
                 // Tell the builder to move to the build location
                 BWAPI_builder->move( buildPosition );
               }
@@ -536,9 +535,9 @@ namespace BWSAL
          t->getBuildType().createsUnit() == false )
       return;
 
-    BWAPI::Unit* builder = t->getBuilder()->getBuildUnit()->getUnit();
+    BWAPI::Unit builder = t->getBuilder()->getBuildUnit()->getUnit();
     BWAPI::UnitType ut = t->getBuildType().getUnitType();
-    BWAPI::Unit* buildUnit = t->getCreatedUnit()->getUnit();
+    BWAPI::Unit buildUnit = t->getCreatedUnit()->getUnit();
 
     // If the building dies, or isn't the right type, set it to null
     if ( !( buildUnit != NULL && buildUnit->exists() && ( buildUnit->getType() == ut || buildUnit->getBuildType() == ut ) ) )
@@ -552,7 +551,7 @@ namespace BWSAL
       {
         BWAPI::TilePosition bl = t->getBuildLocation();
         // Look at the units on the tile to see if it exists yet
-        for each ( BWAPI::Unit* u in BWAPI::Broodwar->getUnitsOnTile( bl.x(), bl.y() ) )
+        for each ( BWAPI::Unit u in BWAPI::Broodwar->getUnitsOnTile( bl.x, bl.y ) )
         {
           if ( u->getType() == ut && !u->isLifted() )
           {
@@ -565,9 +564,9 @@ namespace BWSAL
       if ( buildUnit == NULL && ut.isAddon() ) // If we don't have a building yet, look for it
       {
         BWAPI::TilePosition bl = t->getBuildLocation();
-        bl.x() += 4;
-        bl.y()++;
-        for each ( BWAPI::Unit* u in BWAPI::Broodwar->getUnitsOnTile( bl.x(), bl.y() ) )
+        bl.x += 4;
+        bl.y++;
+        for each ( BWAPI::Unit u in BWAPI::Broodwar->getUnitsOnTile( bl.x, bl.y ) )
         {
           if ( u->getType() == ut && !u->isLifted() )
           {
@@ -609,9 +608,9 @@ namespace BWSAL
          t->getBuildType().createsUnit() == false )
       return;
 
-    BWAPI::Unit* builder = t->getBuilder()->getBuildUnit()->getUnit();
+    BWAPI::Unit builder = t->getBuilder()->getBuildUnit()->getUnit();
     BWAPI::UnitType ut = t->getBuildType().getUnitType();
-    BWAPI::Unit* buildUnit = t->getSecondCreatedUnit()->getUnit();
+    BWAPI::Unit buildUnit = t->getSecondCreatedUnit()->getUnit();
 
     // If the building dies, or isn't the right type, set it to null
     if ( !( buildUnit != NULL && buildUnit->exists() && ( buildUnit->getType() == ut || buildUnit->getBuildType() == ut ) ) )
@@ -621,10 +620,10 @@ namespace BWSAL
 
     if ( buildUnit == NULL && t->getBuildType().createsUnit() && t->getBuildType().requiresLarva() )
     {
-      BWAPI::Unit* closestValidUnit = NULL;
+      BWAPI::Unit closestValidUnit = NULL;
       double closestDistance = 100000;
       // Not a perfect way of determining the build unit but good enough for now
-      for each ( BWAPI::Unit* u in BWAPI::Broodwar->getUnitsInRadius( builder->getPosition(), 200 ) )
+      for each ( BWAPI::Unit u in BWAPI::Broodwar->getUnitsInRadius( builder->getPosition(), 200 ) )
       {
         if ( u->getType() == ut && u->exists() && u->isCompleted() && BuildUnit::getBuildUnitIfExists( u ) == NULL )
         {
@@ -652,16 +651,16 @@ namespace BWSAL
     }
   }
 
-  void TaskExecutor::onOffer( std::set< BWAPI::Unit* > units )
+  void TaskExecutor::onOffer( std::set< BWAPI::Unit > units )
   {
     m_arbitrator->accept( this, units );
-    foreach( BWAPI::Unit* u, units )
+    for( BWAPI::Unit u : units )
     {
       m_builders.insert( u );
     }
   }
 
-  void TaskExecutor::onRevoke( BWAPI::Unit* unit, double bid )
+  void TaskExecutor::onRevoke( BWAPI::Unit unit, double bid )
   {
     m_builders.erase( unit );
   }

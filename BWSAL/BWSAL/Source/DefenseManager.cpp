@@ -1,6 +1,5 @@
 #include <BWSAL/DefenseManager.h>
 #include <BWSAL/BorderManager.h>
-#include <Util/Foreach.h>
 namespace BWSAL
 {
   DefenseManager* DefenseManager::s_defenseManager = NULL;
@@ -39,9 +38,9 @@ namespace BWSAL
     s_defenseManager = NULL;
   }
 
-  void DefenseManager::onOffer( std::set< BWAPI::Unit* > units )
+  void DefenseManager::onOffer( std::set< BWAPI::Unit > units )
   {
-    foreach( BWAPI::Unit* u, units )
+    for( BWAPI::Unit u : units )
     {
       if ( m_defenders.find( u ) == m_defenders.end() )
       {
@@ -52,7 +51,7 @@ namespace BWSAL
     }
   }
 
-  void DefenseManager::onRevoke( BWAPI::Unit* unit, double bid )
+  void DefenseManager::onRevoke( BWAPI::Unit unit, double bid )
   {
     m_defenders.erase( unit );
   }
@@ -60,7 +59,7 @@ namespace BWSAL
   void DefenseManager::onFrame()
   {
     // Bid on all completed military units
-    foreach( BWAPI::Unit* u, BWAPI::Broodwar->self()->getUnits() )
+    for( BWAPI::Unit u : BWAPI::Broodwar->self()->getUnits() )
     {
       if ( u->isCompleted() && 
          !u->getType().isWorker() && 
@@ -76,7 +75,7 @@ namespace BWSAL
     {
       m_myBorder = m_borderManager->getMyBorder();
       m_myBorderVector.clear();
-      foreach( BWTA::Chokepoint* c, m_myBorder )
+      for( BWTA::Chokepoint* c : m_myBorder )
       {
         m_myBorderVector.push_back( c );
       }
@@ -87,7 +86,7 @@ namespace BWSAL
     if ( !m_myBorder.empty() )
     {
       // TODO: Update to use computeAssignments
-      for ( std::map< BWAPI::Unit*, DefenseData >::iterator d = m_defenders.begin(); d != m_defenders.end(); d++ )
+      for ( std::map< BWAPI::Unit, DefenseData >::iterator d = m_defenders.begin(); d != m_defenders.end(); d++ )
       {
         if ( d->second.mode == DefenseData::Idle || borderUpdated )
         {

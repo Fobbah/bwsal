@@ -18,7 +18,7 @@ namespace BWSAL
     BuildUnitManager::getInstance()->addUnit(this);
   }
 
-  BuildUnit::BuildUnit( BWAPI::Unit* unit )
+  BuildUnit::BuildUnit( BWAPI::Unit unit )
   {
     m_unit = unit;
     m_task = NULL;
@@ -55,7 +55,7 @@ namespace BWSAL
     return BuildTypes::None;
   }
 
-  BWAPI::Unit* BuildUnit::getUnit() const
+  BWAPI::Unit BuildUnit::getUnit() const
   {
     return m_unit;
   }
@@ -65,7 +65,7 @@ namespace BWSAL
     return m_task;
   }
 
-  void BuildUnit::setUnit( BWAPI::Unit* unit )
+  void BuildUnit::setUnit( BWAPI::Unit unit )
   {
     m_unit = unit;
   }
@@ -75,7 +75,7 @@ namespace BWSAL
     m_task = task;
   }
 
-  BuildUnit* BuildUnit::getBuildUnit( BWAPI::Unit* unit )
+  BuildUnit* BuildUnit::getBuildUnit( BWAPI::Unit unit )
   {
     // Sanity check
     if ( unit == NULL )
@@ -93,7 +93,7 @@ namespace BWSAL
     return buildUnit;
   }
 
-  BuildUnit* BuildUnit::getBuildUnitIfExists( BWAPI::Unit* unit )
+  BuildUnit* BuildUnit::getBuildUnitIfExists( BWAPI::Unit unit )
   {
     // Sanity check
     if ( unit == NULL )
@@ -104,7 +104,7 @@ namespace BWSAL
     return ( BuildUnit* )unit->getClientInfo();
   }
 
-  void BuildUnit::setBuildUnit( BWAPI::Unit* unit, BuildUnit* buildUnit )
+  void BuildUnit::setBuildUnit( BWAPI::Unit unit, BuildUnit* buildUnit )
   {
     // Sanity check
     if ( unit == NULL || buildUnit == NULL )

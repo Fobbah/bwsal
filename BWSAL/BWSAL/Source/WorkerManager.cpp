@@ -5,7 +5,6 @@
 #include <BWSAL/UnitGroupManager.h>
 #include <BWSAL/Util.h>
 #include <BWSAL/Types.h>
-#include <Util/Foreach.h>
 #include <algorithm>
 namespace BWSAL
 {
@@ -54,9 +53,9 @@ namespace BWSAL
     s_workerManager = NULL;
   }
 
-  void WorkerManager::onOffer( std::set< BWAPI::Unit* > units )
+  void WorkerManager::onOffer( std::set< BWAPI::Unit > units )
   {
-    foreach( BWAPI::Unit* u, units )
+    for( BWAPI::Unit u : units )
     {
       if ( u->getType().isWorker() && !m_mineralOrder.empty() )
       {
@@ -74,7 +73,7 @@ namespace BWSAL
       }
     }
   }
-  void WorkerManager::onRevoke( BWAPI::Unit* unit, double bid )
+  void WorkerManager::onRevoke( BWAPI::Unit unit, double bid )
   {
     // Sanity check
     if ( unit == NULL )
@@ -90,14 +89,14 @@ namespace BWSAL
 
     if ( unit->getType().isResourceContainer() )
     {
-      std::map< BWAPI::Unit*, std::set< BWAPI::Unit* > >::iterator c = m_currentWorkers.find( unit );
+      std::map< BWAPI::Unit, std::set< BWAPI::Unit > >::iterator c = m_currentWorkers.find( unit );
       if ( c == m_currentWorkers.end() )
       {
         return;
       }
-      foreach( BWAPI::Unit* i, c->second )
+      for( BWAPI::Unit i : c->second )
       {
-        std::map< BWAPI::Unit*, WorkerData >::iterator j = m_workers.find( i );
+        std::map< BWAPI::Unit, WorkerData >::iterator j = m_workers.find( i );
         if ( j != m_workers.end() )
         {
           if ( j->second.m_resource == unit )
@@ -117,7 +116,7 @@ namespace BWSAL
   {
     // determine current worker assignments
     // also workers that are mining from resources that dont belong to any of our bases will be set to free
-    for ( std::map< BWAPI::Unit*, WorkerData >::iterator w = m_workers.begin(); w != m_workers.end(); w++ )
+    for ( std::map< BWAPI::Unit, WorkerData >::iterator w = m_workers.begin(); w != m_workers.end(); w++ )
     {
       if ( w->second.m_newResource != NULL )
       {
@@ -133,9 +132,9 @@ namespace BWSAL
     }
 
     // get free workers
-    std::set< BWAPI::Unit* > freeWorkers;
+    std::set< BWAPI::Unit > freeWorkers;
 
-    for ( std::map< BWAPI::Unit*, WorkerData >::iterator w = m_workers.begin(); w != m_workers.end(); w++ )
+    for ( std::map< BWAPI::Unit, WorkerData >::iterator w = m_workers.begin(); w != m_workers.end(); w++ )
     {
       if ( w->second.m_newResource == NULL )
       {
@@ -154,7 +153,7 @@ namespace BWSAL
     }
 
     // free workers from resources with too many workers
-    for ( std::map< BWAPI::Unit*, int >::iterator i = m_desiredWorkerCount.begin(); i != m_desiredWorkerCount.end(); i++ )
+    for ( std::map< BWAPI::Unit, int >::iterator i = m_desiredWorkerCount.begin(); i != m_desiredWorkerCount.end(); i++ )
     {
       if ( i->second < (int)m_currentWorkers[i->first].size() )
       {
@@ -162,7 +161,7 @@ namespace BWSAL
         int amountToRemove = m_currentWorkers[i->first].size() - i->second;
         for ( int j = 0; j < amountToRemove; j++ )
         {
-          BWAPI::Unit* worker = *m_currentWorkers[i->first].begin();
+          BWAPI::Unit worker = *m_currentWorkers[i->first].begin();
           freeWorkers.insert( worker );
           m_workers[worker].m_newResource = NULL;
           m_currentWorkers[i->first].erase( worker );
@@ -170,17 +169,17 @@ namespace BWSAL
       }
     }
 
-    std::vector< BWAPI::Unit* > workerUnit;
-    std::vector< BWAPI::Unit* > taskUnit;
+    std::vector< BWAPI::Unit > workerUnit;
+    std::vector< BWAPI::Unit > taskUnit;
     std::map< int, int > assignment;
 
-    foreach( BWAPI::Unit* i, freeWorkers )
+    for( BWAPI::Unit i : freeWorkers )
     {
       workerUnit.push_back( i );
     }
 
     // assign workers to resources that need more workers
-    for ( std::map< BWAPI::Unit*, int >::iterator i = m_desiredWorkerCount.begin(); i != m_desiredWorkerCount.end(); i++ )
+    for ( std::map< BWAPI::Unit, int >::iterator i = m_desiredWorkerCount.begin(); i != m_desiredWorkerCount.end(); i++ )
     {
       if ( i->second > (int)m_currentWorkers[i->first].size() )
       {
@@ -208,14 +207,14 @@ namespace BWSAL
     // use assignment
     for ( std::map< int, int >::iterator a = assignment.begin(); a != assignment.end(); a++ )
     {
-      BWAPI::Unit* worker = workerUnit[a->first];
-      BWAPI::Unit* resource = taskUnit[a->second];
+      BWAPI::Unit worker = workerUnit[a->first];
+      BWAPI::Unit resource = taskUnit[a->second];
       m_workers[worker].m_newResource = resource;
       m_currentWorkers[resource].insert( worker );
     }
   }
 
-  bool mineralCompare ( const std::pair< BWAPI::Unit*, int > i, const std::pair< BWAPI::Unit*, int > j )
+  bool mineralCompare ( const std::pair< BWAPI::Unit, int > i, const std::pair< BWAPI::Unit, int > j )
   {
     return i.second > j.second;
   }
@@ -230,11 +229,11 @@ namespace BWSAL
     m_optimalWorkerCount = 0;
     
     // iterate over all the resources of each active base
-    foreach( Base* b, m_basesCache )
+    for( Base* b : m_basesCache )
     {
-      std::set< BWAPI::Unit* > baseMinerals = b->getMinerals();
-      std::vector< std::pair< BWAPI::Unit*, int > > baseMineralOrder;
-      foreach( BWAPI::Unit* m, baseMinerals )
+      const BWAPI::Unitset baseMinerals = b->getMinerals();
+      std::vector< std::pair< BWAPI::Unit, int > > baseMineralOrder;
+      for( BWAPI::Unit m : baseMinerals )
       {
         m_resourceBase[m] = b;
         m_desiredWorkerCount[m] = 0;
@@ -244,11 +243,11 @@ namespace BWSAL
       std::sort( baseMineralOrder.begin(), baseMineralOrder.end(), mineralCompare );
       for ( int i = 0; i < (int)baseMineralOrder.size(); i++ )
       {
-        BWAPI::Unit* mineral = baseMineralOrder[i].first;
+        BWAPI::Unit mineral = baseMineralOrder[i].first;
         m_mineralOrder.push_back( std::make_pair( mineral, mineral->getResources() - 2*(int)mineral->getPosition().getDistance( b->getBaseLocation()->getPosition() ) - 3000*i ) );
       }
-      std::set< BWAPI::Unit* > baseGeysers = b->getGeysers();
-      foreach( BWAPI::Unit* g, baseGeysers )
+      const BWAPI::Unitset baseGeysers = b->getGeysers();
+      for( BWAPI::Unit g : baseGeysers )
       {
         m_optimalWorkerCount += 3;
         m_resourceBase[g] = b;
@@ -298,8 +297,8 @@ namespace BWSAL
   void WorkerManager::onFrame()
   {
     // bid a constant value of 10 on all completed workers
-    std::set< BWAPI::Unit* > w = SelectAll()( isCompleted )( isWorker );
-    foreach( BWAPI::Unit* u, w )
+    std::set< BWAPI::Unit > w = SelectAll()( isCompleted )( isWorker );
+    for( BWAPI::Unit u : w )
     {
       m_arbitrator->setBid( this, u, 10 );
     }
@@ -311,14 +310,14 @@ namespace BWSAL
       m_lastSCVBalance = BWAPI::Broodwar->getFrameCount();
       rebalanceWorkers();
     }
-    for ( std::map< BWAPI::Unit*, WorkerData >::iterator w = m_workers.begin(); w != m_workers.end(); w++ )
+    for ( std::map< BWAPI::Unit, WorkerData >::iterator w = m_workers.begin(); w != m_workers.end(); w++ )
     {
       if ( w->second.m_resource != NULL )
       {
-        BWAPI::Broodwar->drawLineMap( w->first->getPosition().x(),
-                                      w->first->getPosition().y(),
-                                      w->second.m_resource->getPosition().x(),
-                                      w->second.m_resource->getPosition().y(),
+        BWAPI::Broodwar->drawLineMap( w->first->getPosition().x,
+                                      w->first->getPosition().y,
+                                      w->second.m_resource->getPosition().x,
+                                      w->second.m_resource->getPosition().y,
                                       BWAPI::Colors::White );
       }
     }
@@ -330,9 +329,9 @@ namespace BWSAL
     m_mineralWorkers = 0;
     m_gasWorkers = 0;
 
-    for ( std::map< BWAPI::Unit*, WorkerData >::iterator w = m_workers.begin(); w != m_workers.end(); w++ )
+    for ( std::map< BWAPI::Unit, WorkerData >::iterator w = m_workers.begin(); w != m_workers.end(); w++ )
     {
-      BWAPI::Unit* i = w->first;
+      BWAPI::Unit i = w->first;
       if ( w->second.m_resource != NULL )
       {
         if ( w->second.m_resource->getType() == BWAPI::UnitTypes::Resource_Mineral_Field )
@@ -375,7 +374,7 @@ namespace BWSAL
           Base* b = m_baseManager->getBase( BWTA::getNearestBaseLocation( i->getPosition() ) );
           if ( b != NULL )
           {
-            BWAPI::Unit* center = b->getResourceDepot();
+            BWAPI::Unit center = b->getResourceDepot();
             if ( i->getTarget() == NULL ||
                 !i->getTarget()->exists() ||
                  i->getTarget() != center ||
@@ -389,7 +388,7 @@ namespace BWSAL
     }
   }
 
-  void WorkerManager::onUnitComplete( BWAPI::Unit* unit )
+  void WorkerManager::onUnitComplete( BWAPI::Unit unit )
   {
     if ( unit->getType().isRefinery() )
     {

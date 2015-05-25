@@ -16,12 +16,12 @@ namespace BWSAL
       }
     }
   }
-  BWAPI::TilePosition BFSBuildingPlacer::findBuildLocation( ReservedMap *reserveMap, BWAPI::UnitType unitType, BWAPI::TilePosition seedLocation, BWAPI::Unit* builder )
+  BWAPI::TilePosition BFSBuildingPlacer::findBuildLocation( ReservedMap *reserveMap, BWAPI::UnitType unitType, BWAPI::TilePosition seedLocation, BWAPI::Unit builder )
   {
     return getBuildLocationNear( reserveMap, seedLocation, unitType, builder, 1 );
   }
 
-  BWAPI::TilePosition BFSBuildingPlacer::getBuildLocationNear( ReservedMap *reserveMap, BWAPI::TilePosition position, BWAPI::UnitType type, BWAPI::Unit* builder, int buildDist ) const
+  BWAPI::TilePosition BFSBuildingPlacer::getBuildLocationNear( ReservedMap *reserveMap, BWAPI::TilePosition position, BWAPI::UnitType type, BWAPI::Unit builder, int buildDist ) const
   {
     // returns a valid build location near the specified tile position.
     if ( type.isAddon() )
@@ -43,8 +43,8 @@ namespace BWSAL
         // We can build here with space so return this tile position
         return t;
       }
-      int tx = t.x();
-      int ty = t.y();
+	  int tx = t.x;
+      int ty = t.y;
       int minx = max( tx - 1, 0 );
       int maxx = min( tx + 1, BWAPI::Broodwar->mapWidth() - 1 );
       int miny = max( ty - 1, 0 );
@@ -79,7 +79,7 @@ namespace BWSAL
     return BWAPI::TilePositions::None;
   }
 
-  bool BFSBuildingPlacer::canBuildHereWithSpace( ReservedMap *reserveMap, BWAPI::TilePosition position, BWAPI::UnitType type, BWAPI::Unit* builder, int buildDist ) const
+  bool BFSBuildingPlacer::canBuildHereWithSpace( ReservedMap *reserveMap, BWAPI::TilePosition position, BWAPI::UnitType type, BWAPI::Unit builder, int buildDist ) const
   {
     if ( type.isAddon() )
     {
@@ -109,22 +109,22 @@ namespace BWSAL
     {
       width += 2;
     }
-    int startx = position.x() - buildDist;
+    int startx = position.x - buildDist;
     if ( startx < 0 )
     {
       return false;
     }
-    int starty = position.y() - buildDist;
+    int starty = position.y - buildDist;
     if ( starty < 0 )
     {
       return false;
     }
-    int endx = position.x() + width + buildDist;
+    int endx = position.x + width + buildDist;
     if ( endx > BWAPI::Broodwar->mapWidth() )
     {
       return false;
     }
-    int endy = position.y() + height + buildDist;
+    int endy = position.y + height + buildDist;
     if ( endy > BWAPI::Broodwar->mapHeight() )
     {
       return false;
@@ -141,14 +141,14 @@ namespace BWSAL
       }
     }
 
-    if ( position.x() > 3 )
+    if ( position.x > 3 )
     {
       int startx2 = max( startx - 2, 0 );
       for ( int x = startx2; x < startx; x++ )
       {
         for ( int y = starty; y < endy; y++ )
         {
-          for each ( BWAPI::Unit* u in BWAPI::Broodwar->getUnitsOnTile( x, y ) )
+          for each ( BWAPI::Unit u in BWAPI::Broodwar->getUnitsOnTile( x, y ) )
           {
             if ( !u->isLifted() && u != builder )
             {
@@ -167,14 +167,14 @@ namespace BWSAL
     }
     return true;
   }
-  bool BFSBuildingPlacer::isBuildable( BWAPI::Unit* builder, int x, int y ) const
+  bool BFSBuildingPlacer::isBuildable( BWAPI::Unit builder, int x, int y ) const
   {
     // returns true if this tile is currently buildable, takes into account units on tile
     if ( !BWAPI::Broodwar->isBuildable( x, y ) )
     {
       return false;
     }
-    for each ( BWAPI::Unit* u in BWAPI::Broodwar->getUnitsOnTile( x, y ) )
+    for each ( BWAPI::Unit u in BWAPI::Broodwar->getUnitsOnTile( x, y ) )
     {
       if ( u->getType().isBuilding() && !u->isLifted() && !u->getType().isFlyer() && u != builder )
       {

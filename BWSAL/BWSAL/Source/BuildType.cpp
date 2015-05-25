@@ -1,6 +1,5 @@
 #include <BWSAL/BuildType.h>
 #include <BWSAL/Util.h>
-#include <Util/Foreach.h>
 #include <BWAPI.h>
 #include <algorithm>
 namespace BWSAL
@@ -661,7 +660,7 @@ namespace BWSAL
       set( Anabolic_Synthesis, BWAPI::UpgradeTypes::Anabolic_Synthesis );
       set( Charon_Boosters, BWAPI::UpgradeTypes::Charon_Boosters );
       set( None, BWAPI::UnitTypes::None );
-      foreach( BuildType i, buildTypeSet )
+      for( BuildType i : buildTypeSet )
       {
         if ( i != BuildTypes::None )
         {
@@ -674,7 +673,7 @@ namespace BWSAL
       }
 
       // Contstruct required build type set
-      foreach( BuildType i, buildTypeSet )
+      for( BuildType i : buildTypeSet )
       {
         if ( i != BuildTypes::None )
         {
@@ -690,7 +689,7 @@ namespace BWSAL
       races.insert( BWAPI::Races::Zerg );
 
       // Give workers and refineries of different races the same bit masks
-      foreach( BWAPI::Race r, races )
+      for( BWAPI::Race r : races )
       {
         requiredBuildTypeSet.insert( BuildType( r.getWorker() ) );
         requiredBuildTypeSet.insert( BuildType( r.getRefinery() ) );
@@ -707,7 +706,7 @@ namespace BWSAL
       }
 
       // Set masks for required build types, and generate required build type set by race
-      foreach( BuildType i, requiredBuildTypeSet )
+      for( BuildType i : requiredBuildTypeSet )
       {
         if ( buildTypeData[i.getID()].mask > 0 )
         {
@@ -718,7 +717,7 @@ namespace BWSAL
       }
 
       // Generate required mask for each build type
-      foreach( BuildType i, buildTypeSet )
+      for( BuildType i : buildTypeSet )
       {
         if ( i != BuildTypes::None )
         {
@@ -1005,7 +1004,7 @@ namespace BWSAL
     return buildTypeData[this->id].supplyProvided;
   }
 
-  bool BuildType::build( BWAPI::Unit* builder, BWAPI::Unit* secondBuilder, BWAPI::TilePosition buildLocation ) const
+  bool BuildType::build( BWAPI::Unit builder, BWAPI::Unit secondBuilder, BWAPI::TilePosition buildLocation ) const
   {
     // Sanity check
     if ( builder == NULL )
@@ -1042,14 +1041,14 @@ namespace BWSAL
       }
       if ( buildTypeData[this->id].unitType.isBuilding() )
       {
-        return builder->build( buildLocation, buildTypeData[this->id].unitType );
+		  return builder->build(buildTypeData[this->id].unitType, buildLocation);
       }
       return builder->train( buildTypeData[this->id].unitType );
     }
     return false;
   }
 
-  bool BuildType::isPreparing( BWAPI::Unit* builder, BWAPI::Unit* secondBuilder ) const
+  bool BuildType::isPreparing( BWAPI::Unit builder, BWAPI::Unit secondBuilder ) const
   {
     // Sanity check
     if ( builder == NULL )
@@ -1078,7 +1077,7 @@ namespace BWSAL
     }
     return false;
   }
-  bool BuildType::isBuilding( BWAPI::Unit* builder, BWAPI::Unit* secondBuilder, BWAPI::Unit* createdUnit ) const
+  bool BuildType::isBuilding( BWAPI::Unit builder, BWAPI::Unit secondBuilder, BWAPI::Unit createdUnit ) const
   {
     // Sanity check
     if ( builder == NULL )
@@ -1138,7 +1137,7 @@ namespace BWSAL
     return false;
   }
 
-  bool BuildType::isCompleted( BWAPI::Unit* builder, BWAPI::Unit* secondBuilder, BWAPI::Unit* createdUnit, BWAPI::Unit* secondCreatedUnit ) const
+  bool BuildType::isCompleted( BWAPI::Unit builder, BWAPI::Unit secondBuilder, BWAPI::Unit createdUnit, BWAPI::Unit secondCreatedUnit ) const
   {
     if ( buildTypeData[this->id].techType != BWAPI::TechTypes::None )
     {
@@ -1186,7 +1185,7 @@ namespace BWSAL
     return false;
   }
 
-  int BuildType::remainingTime( BWAPI::Unit* builder, BWAPI::Unit* secondBuilder, BWAPI::Unit* createdUnit ) const
+  int BuildType::remainingTime( BWAPI::Unit builder, BWAPI::Unit secondBuilder, BWAPI::Unit createdUnit ) const
   {
     // Sanity check
     if ( builder == NULL )

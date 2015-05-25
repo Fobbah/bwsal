@@ -1,6 +1,5 @@
 #include <BWSAL/BorderManager.h>
 #include <BWSAL/InformationManager.h>
-#include <Util/Foreach.h>
 namespace BWSAL
 {
   BorderManager* BorderManager::s_borderManager = NULL;
@@ -72,18 +71,18 @@ namespace BWSAL
   void BorderManager::draw()
   {
 
-    foreach( BWTA::Chokepoint* c, m_myBorder )
+	for (BWTA::Chokepoint* c : m_myBorder)
     {
       BWAPI::Position point1 = c->getSides().first;
       BWAPI::Position point2 = c->getSides().second;
-      BWAPI::Broodwar->drawLineMap( point1.x(), point1.y(), point2.x(), point2.y(), BWAPI::Colors::Red );
+      BWAPI::Broodwar->drawLineMap( point1.x, point1.y, point2.x, point2.y, BWAPI::Colors::Red );
     }
 
-    foreach( BWTA::Chokepoint* c, m_enemyBorder )
+	for (BWTA::Chokepoint* c : m_enemyBorder)
     {
       BWAPI::Position point1 = c->getSides().first;
       BWAPI::Position point2 = c->getSides().second;
-      BWAPI::Broodwar->drawLineMap( point1.x(), point1.y(), point2.x(), point2.y(), BWAPI::Colors::Orange );
+      BWAPI::Broodwar->drawLineMap( point1.x, point1.y, point2.x, point2.y, BWAPI::Colors::Orange );
     }
 
   }
@@ -101,13 +100,13 @@ namespace BWSAL
     // Set of regions that the enemy can reach without going through one of our regions
     std::set< BWTA::Region* > canReachEnemy;
 
-    foreach( BWTA::BaseLocation* b, m_myBases )
+	for (BWTA::BaseLocation* b : m_myBases)
     {
       m_myRegions.insert( b->getRegion() );
       canReachSelf.insert( b->getRegion() );
     }
 
-    foreach( BWTA::BaseLocation* b, m_enemyBases )
+	for (BWTA::BaseLocation* b : m_enemyBases)
     {
       m_enemyRegions.insert( b->getRegion() );
       canReachEnemy.insert( b->getRegion() );
@@ -115,7 +114,7 @@ namespace BWSAL
 
     if ( m_enemyBases.empty() )
     {
-      foreach( BWTA::BaseLocation* b, BWTA::getBaseLocations() )
+	  for (BWTA::BaseLocation* b : BWTA::getBaseLocations())
       {
         if ( m_myBases.find( b ) == m_myBases.end() )
         {
@@ -130,9 +129,9 @@ namespace BWSAL
     {
       exploring = false;
 
-      foreach( BWTA::Region* r, BWTA::getRegions() )
+      for( BWTA::Region* r : BWTA::getRegions() )
       {
-        foreach( BWTA::Chokepoint* c, r->getChokepoints() )
+        for( BWTA::Chokepoint* c : r->getChokepoints() )
         {
           BWTA::Region* r2 = c->getRegions().first;
           if ( r == r2 )
@@ -158,7 +157,7 @@ namespace BWSAL
       }
     }
 
-    foreach( BWTA::Region* r, BWTA::getRegions() )
+	for (BWTA::Region* r : BWTA::getRegions())
     {
       // If we can reach r and not enemy, we control it
       if ( canReachSelf.find( r ) != canReachSelf.end() && canReachEnemy.find( r ) == canReachEnemy.end() )
@@ -175,9 +174,9 @@ namespace BWSAL
     // If both or neither of us can reach r, it is in no - mans land.
 
     // Compute our border from our regions
-    foreach( BWTA::Region* r, m_myRegions )
+	for (BWTA::Region* r : m_myRegions)
     {
-      foreach( BWTA::Chokepoint* c, r->getChokepoints() )
+	  for (BWTA::Chokepoint* c : r->getChokepoints())
       {
         if ( m_myBorder.find( c ) == m_myBorder.end() )
         {
@@ -192,9 +191,9 @@ namespace BWSAL
     }
 
     // Compute the enemy's border from the enemy's regions
-    foreach( BWTA::Region* r, m_enemyRegions )
+	for (BWTA::Region* r : m_enemyRegions)
     {
-      foreach( BWTA::Chokepoint* c, r->getChokepoints() )
+      for (BWTA::Chokepoint* c : r->getChokepoints())
       {
         if ( m_enemyBorder.find( c ) == m_enemyBorder.end() )
         {

@@ -6,7 +6,6 @@
 #include <BWSAL/MetaUnitVariable.h>
 #include <BWSAL/BuildEventTimeline.h>
 #include <BWSAL/Util.h>
-#include <Util/Foreach.h>
 #include <list>
 #include <BWAPI.h>
 namespace BWSAL
@@ -110,7 +109,7 @@ namespace BWSAL
     bool found = t->m_useAnyBuilder;
     if ( !found )
     {
-      foreach( MetaUnit* mu, t->m_possibleBuilders )
+      for( MetaUnit* mu : t->m_possibleBuilders )
       {
         if ( mu->getBuildUnit() == unit )
         {
@@ -159,7 +158,7 @@ namespace BWSAL
   void TaskScheduler::initializeHLHPlanData(std::map< BuildUnit*, HLHPlanData > *hlhPlans )
   {
     // Initialize HLH data
-    foreach( BuildUnit* bu, m_buildUnitManager->getUnits() )
+    for( BuildUnit* bu : m_buildUnitManager->getUnits() )
     {
       if ( bu->getType().getUnitType().producesLarva() )
       {
@@ -601,7 +600,7 @@ namespace BWSAL
     }
     if ( validBuildTypeSince != NEVER )
     {
-      foreach ( BuildUnit* bu, m_buildUnitManager->getUnits() )
+      for ( BuildUnit* bu : m_buildUnitManager->getUnits() )
       {
         if ( bu->m_planningData.m_type == t->getBuildType().whatBuilds().first &&
              canCompleteWithUnitBeforeNextEvent( validBuildTypeSince, bu, t, nextEvent ) )
@@ -684,7 +683,7 @@ namespace BWSAL
       if ( candidateUnit == NULL )
       {
         // We need to find a candidate unit
-        foreach ( BuildUnit* bu, m_buildUnitManager->getUnits() )
+        for ( BuildUnit* bu : m_buildUnitManager->getUnits() )
         {
           if ( bu->m_planningData.m_type == t->getBuildType().whatBuilds().first )
           {

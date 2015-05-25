@@ -8,8 +8,8 @@
 #include <BWAPI.h>
 namespace BWSAL
 {
-  std::set< BWAPI::Unit* > emptySet;
-  Base::Base( BWTA::BaseLocation* b, BWAPI::Unit* resourceDepot )
+  BWAPI::Unitset emptySet;
+  Base::Base( BWTA::BaseLocation* b, BWAPI::Unit resourceDepot )
   {
     m_baseLocation = b;
     m_resourceDepot = resourceDepot;
@@ -49,17 +49,17 @@ namespace BWSAL
     return m_baseLocation;
   }
 
-  BWAPI::Unit* Base::getResourceDepot() const
+  BWAPI::Unit Base::getResourceDepot() const
   {
     return m_resourceDepot;
   }
 
-  BWAPI::Unit* Base::getRefinery() const
+  BWAPI::Unit Base::getRefinery() const
   {
     return m_refinery;
   }
 
-  const std::set< BWAPI::Unit* >& Base::getMinerals() const
+  const BWAPI::Unitset Base::getMinerals() const
   {
     if ( m_baseLocation == NULL )
     {
@@ -68,7 +68,7 @@ namespace BWSAL
     return m_baseLocation->getMinerals();
   }
 
-  const std::set< BWAPI::Unit* >& Base::getGeysers() const
+  const BWAPI::Unitset Base::getGeysers() const
   {
     if ( m_baseLocation == NULL )
     {
@@ -124,7 +124,7 @@ namespace BWSAL
                 ( resourceDepotIsCompleted( m_resourceDepot ) || m_resourceDepot->getRemainingBuildTime() < 300 ) );
   }
 
-  void Base::onUnitDestroy( BWAPI::Unit* u )
+  void Base::onUnitDestroy( BWAPI::Unit u )
   {
     if ( u == m_refinery )
     {

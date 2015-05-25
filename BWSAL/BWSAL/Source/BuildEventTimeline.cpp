@@ -2,7 +2,6 @@
 #include <BWSAL/BuildUnit.h>
 #include <BWSAL/BuildUnitManager.h>
 #include <BWSAL/Util.h>
-#include <Util/Foreach.h>
 #include <BWAPI.h>
 #include <sstream>
 namespace BWSAL
@@ -126,7 +125,7 @@ namespace BWSAL
     std::map< BuildUnit*, HLHPlanData > hlhPlans;
 
     int lastLarvaCount = 0;
-    foreach( BuildUnit* bu, m_buildUnitManager->getUnits() )
+    for( BuildUnit* bu : m_buildUnitManager->getUnits() )
     {
       if ( bu->getType().getUnitType().producesLarva() )
       {

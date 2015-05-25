@@ -1,5 +1,4 @@
 #include <BWSAL/InformationManager.h>
-#include <Util/Foreach.h>
 #include <BWSAL/Types.h>
 
 namespace BWSAL
@@ -64,7 +63,7 @@ namespace BWSAL
     s_informationManager = NULL;
   }
 
-  void InformationManager::onUnitDiscover( BWAPI::Unit* unit )
+  void InformationManager::onUnitDiscover( BWAPI::Unit unit )
   {
     // Sanity check
     if ( unit == NULL )
@@ -107,7 +106,7 @@ namespace BWSAL
     }
   }
 
-  void InformationManager::onUnitEvade( BWAPI::Unit* unit )
+  void InformationManager::onUnitEvade( BWAPI::Unit unit )
   {
     // Sanity check
     if ( unit == NULL )
@@ -122,7 +121,7 @@ namespace BWSAL
     m_savedData[unit].m_lastSeenTime = BWAPI::Broodwar->getFrameCount();
   }
 
-  void InformationManager::onUnitDestroy( BWAPI::Unit* unit )
+  void InformationManager::onUnitDestroy( BWAPI::Unit unit )
   {
     // Sanity check
     if ( unit == NULL )
@@ -147,7 +146,7 @@ namespace BWSAL
     }
   }
 
-  BWAPI::Player* InformationManager::getPlayer( BWAPI::Unit* unit ) const
+  BWAPI::Player InformationManager::getPlayer( BWAPI::Unit unit ) const
   {
     // Sanity check
     if ( unit == NULL )
@@ -158,7 +157,7 @@ namespace BWSAL
     {
       return unit->getPlayer();
     }
-    std::map< BWAPI::Unit*, UnitData >::const_iterator i = m_savedData.find( unit );
+    std::map< BWAPI::Unit, UnitData >::const_iterator i = m_savedData.find( unit );
     if ( i == m_savedData.end() )
     {
       return NULL;
@@ -166,7 +165,7 @@ namespace BWSAL
     return ( *i ).second.m_player;
   }
 
-  BWAPI::UnitType InformationManager::getType( BWAPI::Unit* unit ) const
+  BWAPI::UnitType InformationManager::getType( BWAPI::Unit unit ) const
   {
     // Sanity check
     if ( unit == NULL )
@@ -178,7 +177,7 @@ namespace BWSAL
     {
       return unit->getType();
     }
-    std::map< BWAPI::Unit*, UnitData >::const_iterator i = m_savedData.find( unit );
+    std::map< BWAPI::Unit, UnitData >::const_iterator i = m_savedData.find( unit );
     if ( i == m_savedData.end() )
     {
       return BWAPI::UnitTypes::None;
@@ -186,7 +185,7 @@ namespace BWSAL
     return ( *i ).second.m_type;
   }
 
-  BWAPI::Position InformationManager::getLastPosition( BWAPI::Unit* unit ) const
+  BWAPI::Position InformationManager::getLastPosition( BWAPI::Unit unit ) const
   {
     // Sanity check
     if ( unit == NULL )
@@ -198,7 +197,7 @@ namespace BWSAL
     {
       return unit->getPosition();
     }
-    std::map< BWAPI::Unit*, UnitData >::const_iterator i = m_savedData.find( unit );
+    std::map< BWAPI::Unit, UnitData >::const_iterator i = m_savedData.find( unit );
     if ( i == m_savedData.end() )
     {
       return BWAPI::Positions::None;
@@ -206,7 +205,7 @@ namespace BWSAL
     return ( *i ).second.m_position;
   }
 
-  int InformationManager::getLastSeenTime( BWAPI::Unit* unit ) const
+  int InformationManager::getLastSeenTime( BWAPI::Unit unit ) const
   {
     // Sanity check
     if ( unit == NULL )
@@ -218,7 +217,7 @@ namespace BWSAL
     {
       return BWAPI::Broodwar->getFrameCount();
     }
-    std::map< BWAPI::Unit*, UnitData >::const_iterator i = m_savedData.find( unit );
+    std::map< BWAPI::Unit, UnitData >::const_iterator i = m_savedData.find( unit );
     if ( i == m_savedData.end() )
     {
       return NEVER;
@@ -226,7 +225,7 @@ namespace BWSAL
     return ( *i ).second.m_lastSeenTime;
   }
 
-  bool InformationManager::exists( BWAPI::Unit* unit ) const
+  bool InformationManager::exists( BWAPI::Unit unit ) const
   {
     // Sanity check
     if ( unit == NULL )
@@ -238,7 +237,7 @@ namespace BWSAL
     {
       return true;
     }
-    std::map< BWAPI::Unit*, UnitData >::const_iterator i = m_savedData.find( unit );
+    std::map< BWAPI::Unit, UnitData >::const_iterator i = m_savedData.find( unit );
     if ( i == m_savedData.end() )
     {
       return false;

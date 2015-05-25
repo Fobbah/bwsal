@@ -45,7 +45,7 @@ namespace BWSAL
     m_buildUnits.insert( unit );
   }
 
-  void BuildUnitManager::onUnitEvade( BWAPI::Unit* unit )
+  void BuildUnitManager::onUnitEvade( BWAPI::Unit unit )
   {
     m_buildUnits.erase( ( BuildUnit* )unit->getClientInfo() );
   }

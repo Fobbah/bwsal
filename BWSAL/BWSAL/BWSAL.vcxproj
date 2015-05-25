@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{DBD449BF-401A-4B1F-89A2-8811DA9E9E5F}</ProjectGuid>
+    <RootNamespace>BWSAL</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../Util/Source;../include;../../../vendors_external/BWAPI;../../../vendors_external/BWTA;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>..\lib\$(ProjectName)d.lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>../Util/Source;../include;../../../vendors_external/BWAPI;../../../vendors_external/BWTA;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_SECURE_SCL 0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>..\lib\$(ProjectName).lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Assignment.cpp" />
+    <ClCompile Include="Source\Base.cpp" />
+    <ClCompile Include="Source\BaseManager.cpp" />
+    <ClCompile Include="Source\BFSBuildingPlacer.cpp" />
+    <ClCompile Include="Source\BorderManager.cpp" />
+    <ClCompile Include="Source\BuildEvent.cpp" />
+    <ClCompile Include="Source\BuildEventTimeline.cpp" />
+    <ClCompile Include="Source\BuildOrderManager.cpp" />
+    <ClCompile Include="Source\BuildState.cpp" />
+    <ClCompile Include="Source\BuildType.cpp" />
+    <ClCompile Include="Source\BuildUnit.cpp" />
+    <ClCompile Include="Source\BuildUnitManager.cpp" />
+    <ClCompile Include="Source\BWSAL.cpp" />
+    <ClCompile Include="Source\DefenseManager.cpp" />
+    <ClCompile Include="Source\InformationManager.cpp" />
+    <ClCompile Include="Source\MacroTask.cpp" />
+    <ClCompile Include="Source\MetaUnitVariable.cpp" />
+    <ClCompile Include="Source\ReservedMap.cpp" />
+    <ClCompile Include="Source\ScoutManager.cpp" />
+    <ClCompile Include="Source\SupplyManager.cpp" />
+    <ClCompile Include="Source\Task.cpp" />
+    <ClCompile Include="Source\TaskExecutor.cpp" />
+    <ClCompile Include="Source\TaskScheduler.cpp" />
+    <ClCompile Include="Source\TaskState.cpp" />
+    <ClCompile Include="Source\UnitGroup.cpp" />
+    <ClCompile Include="Source\UnitGroupManager.cpp" />
+    <ClCompile Include="Source\Util.cpp" />
+    <ClCompile Include="Source\WorkerManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\BWSAL.h" />
+    <ClInclude Include="..\include\BWSAL\Arbitrator.h" />
+    <ClInclude Include="..\include\BWSAL\Base.h" />
+    <ClInclude Include="..\include\BWSAL\BaseManager.h" />
+    <ClInclude Include="..\include\BWSAL\BFSBuildingPlacer.h" />
+    <ClInclude Include="..\include\BWSAL\BorderManager.h" />
+    <ClInclude Include="..\include\BWSAL\BuildEvent.h" />
+    <ClInclude Include="..\include\BWSAL\BuildEventTimeline.h" />
+    <ClInclude Include="..\include\BWSAL\BuildingPlacer.h" />
+    <ClInclude Include="..\include\BWSAL\BuildOrderManager.h" />
+    <ClInclude Include="..\include\BWSAL\BuildState.h" />
+    <ClInclude Include="..\include\BWSAL\BuildType.h" />
+    <ClInclude Include="..\include\BWSAL\BuildUnit.h" />
+    <ClInclude Include="..\include\BWSAL\BuildUnitManager.h" />
+    <ClInclude Include="..\include\BWSAL\Controller.h" />
+    <ClInclude Include="..\include\BWSAL\DefenseManager.h" />
+    <ClInclude Include="..\include\BWSAL\Heap.h" />
+    <ClInclude Include="..\include\BWSAL\InformationManager.h" />
+    <ClInclude Include="..\include\BWSAL\MacroTask.h" />
+    <ClInclude Include="..\include\BWSAL\MetaUnit.h" />
+    <ClInclude Include="..\include\BWSAL\MetaUnitVariable.h" />
+    <ClInclude Include="..\include\BWSAL\RectangleArray.h" />
+    <ClInclude Include="..\include\BWSAL\ReservedMap.h" />
+    <ClInclude Include="..\include\BWSAL\ScoutManager.h" />
+    <ClInclude Include="..\include\BWSAL\SupplyManager.h" />
+    <ClInclude Include="..\include\BWSAL\Task.h" />
+    <ClInclude Include="..\include\BWSAL\TaskExecutor.h" />
+    <ClInclude Include="..\include\BWSAL\TaskList.h" />
+    <ClInclude Include="..\include\BWSAL\TaskScheduler.h" />
+    <ClInclude Include="..\include\BWSAL\TaskState.h" />
+    <ClInclude Include="..\include\BWSAL\Types.h" />
+    <ClInclude Include="..\include\BWSAL\UnitGroup.h" />
+    <ClInclude Include="..\include\BWSAL\UnitGroupManager.h" />
+    <ClInclude Include="..\include\BWSAL\Util.h" />
+    <ClInclude Include="..\include\BWSAL\WorkerManager.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

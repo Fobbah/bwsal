@@ -7,7 +7,6 @@
 #include <BWSAL/BuildState.h>
 #include <BWSAL/MacroTask.h>
 #include <BWSAL/BuildUnit.h>
-#include <Util/Foreach.h>
 #include <BWSAL/Util.h>
 namespace BWSAL
 {
@@ -51,7 +50,7 @@ namespace BWSAL
 
   void BuildOrderManager::resolveDependencies( int insufficientTypes, int priority )
   {
-    foreach( BuildType bt, BuildTypes::allRequiredBuildTypes( BWAPI::Broodwar->self()->getRace() ) )
+    for( BuildType bt : BuildTypes::allRequiredBuildTypes( BWAPI::Broodwar->self()->getRace() ) )
     {
       if ( ( insufficientTypes & bt.getMask() ) > 0)
       {
@@ -101,9 +100,9 @@ namespace BWSAL
         supplyIncrease = false;
         for ( PMTMap::iterator pmt = m_prioritizedMacroTasks.begin(); pmt != m_prioritizedMacroTasks.end() && supplyIncrease == false && tooFarIntoTheFuture == false; pmt++ )
         {
-          foreach( MacroTask* mt, pmt->second.techAndUpgradeMacroTasks )
+          for( MacroTask* mt : pmt->second.techAndUpgradeMacroTasks )
           {
-            foreach( Task* t, mt->getTasks())
+            for( Task* t : mt->getTasks())
             {
               if ( t->isWaiting() && t->isScheduledThisFrame() == false )
               {
@@ -140,7 +139,7 @@ namespace BWSAL
             }
           }
           macroTaskHeap.clear();
-          foreach( MacroTask* mt, pmt->second.unitMacroTasks )
+          for( MacroTask* mt : pmt->second.unitMacroTasks )
           {
             if ( mt->isAdditional() )
             {
@@ -241,7 +240,7 @@ namespace BWSAL
       {
         i2++;
         int incompleteCount = 0;
-        foreach( Task* t, (*i)->getTasks() )
+        for( Task* t : (*i)->getTasks() )
         {
           if ( !t->isCompleted() )
           {
@@ -266,7 +265,7 @@ namespace BWSAL
       {
         i2++;
         int incompleteCount = 0;
-        foreach( Task* t, (*i)->getTasks() )
+        for( Task* t : (*i)->getTasks() )
         {
           if ( !t->isCompleted() )
           {
@@ -291,7 +290,7 @@ namespace BWSAL
         emptyPriorities.insert( pmt->first );
       }
     }
-    foreach( int priority, emptyPriorities)
+    for( int priority : emptyPriorities)
     {
       m_prioritizedMacroTasks.erase( priority );
     }
@@ -304,11 +303,11 @@ namespace BWSAL
     }
     for ( PMTMap::iterator pmt = m_prioritizedMacroTasks.begin(); pmt != m_prioritizedMacroTasks.end(); pmt++ )
     {
-      foreach( MacroTask* mt, pmt->second.techAndUpgradeMacroTasks )
+      for( MacroTask* mt : pmt->second.techAndUpgradeMacroTasks )
       {
         m_totalPlannedTypeCount[mt->getType()] += mt->getWaitingCount();
       }
-      foreach( MacroTask* mt, pmt->second.unitMacroTasks )
+      for( MacroTask* mt : pmt->second.unitMacroTasks )
       {
         m_totalPlannedTypeCount[mt->getType()] += mt->getWaitingCount();
       }
@@ -383,9 +382,9 @@ namespace BWSAL
     y -= 16;
     for ( PMTMap::iterator pmt = m_prioritizedMacroTasks.begin(); pmt != m_prioritizedMacroTasks.end(); pmt++ )
     {
-      foreach( MacroTask* mt, pmt->second.techAndUpgradeMacroTasks )
+      for( MacroTask* mt : pmt->second.techAndUpgradeMacroTasks )
       {
-        foreach( Task* t, mt->getTasks() )
+        for( Task* t : mt->getTasks() )
         {
           if ( t->getRunTime() < NEVER )
           {
@@ -400,9 +399,9 @@ namespace BWSAL
           }
         }
       }
-      foreach( MacroTask* mt, pmt->second.unitMacroTasks )
+      for( MacroTask* mt : pmt->second.unitMacroTasks )
       {
-        foreach( Task* t, mt->getTasks() )
+        for( Task* t : mt->getTasks() )
         {
           if ( t->getRunTime() < NEVER )
           {
