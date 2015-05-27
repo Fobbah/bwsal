@@ -53,7 +53,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../../BWAPI;../../include;../../BWTA2/include;../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../external_libraries/BWAPI/include;../external_libraries/BWTAlib_2.2/include;../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -63,7 +63,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>../../lib/BWAPId.lib;../lib/BWSALd.lib;../../BWTA2/lib/BWTAd.lib;../../BWTA2/lib/libboost_filesystem-vc120-mt-gd-1_56.lib;../../BWTA2/lib/libboost_system-vc120-mt-gd-1_56.lib;../../BWTA2/lib/libboost_thread-vc120-mt-gd-1_56.lib;../../BWTA2/lib/libCGAL-vc120-mt-gd-4.4.lib;../../BWTA2/lib/libgmp-10.lib;../../BWTA2/lib/libmpfr-4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>../external_libraries/BWAPI/lib/BWAPId.lib;../lib/BWSALd.lib;../external_libraries/BWTAlib_2.2/lib/BWTAd.lib;../external_libraries/BWTAlib_2.2/lib/libboost_filesystem-vc120-mt-gd-1_56.lib;../external_libraries/BWTAlib_2.2/lib/libboost_system-vc120-mt-gd-1_56.lib;../external_libraries/BWTAlib_2.2/lib/libboost_thread-vc120-mt-gd-1_56.lib;../external_libraries/BWTAlib_2.2/lib/libCGAL-vc120-mt-gd-4.4.lib;../external_libraries/BWTAlib_2.2/lib/libgmp-10.lib;../external_libraries/BWTAlib_2.2/lib/libmpfr-4.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)d.dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -74,7 +74,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>../../BWAPI;../../include;../../BWTA2/include;../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../external_libraries/BWAPI/include;../external_libraries/BWTAlib_2.2/include;../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_SECURE_SCL 0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -83,7 +83,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>../../lib/BWAPI.lib;../lib/BWSAL.lib;../../BWTA2/lib/BWTA.lib;../../BWTA2/lib/libboost_filesystem-vc120-mt-1_56.lib;../../BWTA2/lib/libboost_system-vc120-mt-1_56.lib;../../BWTA2/lib/libboost_thread-vc120-mt-1_56.lib;../../BWTA2/lib/libCGAL-vc120-mt-4.4.lib;../../BWTA2/lib/libgmp-10.lib;../../BWTA2/lib/libmpfr-4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>../external_libraries/BWAPI/lib/BWAPI.lib;../lib/BWSAL.lib;../external_libraries/BWTAlib_2.2/lib/BWTA.lib;../external_libraries/BWTAlib_2.2/lib/libboost_filesystem-vc120-mt-1_56.lib;../external_libraries/BWTAlib_2.2/lib/libboost_system-vc120-mt-1_56.lib;../external_libraries/BWTAlib_2.2/lib/libboost_thread-vc120-mt-1_56.lib;../external_libraries/BWTAlib_2.2/lib/libCGAL-vc120-mt-4.4.lib;../external_libraries/BWTAlib_2.2/lib/libgmp-10.lib;../external_libraries/BWTAlib_2.2/lib/libmpfr-4.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>

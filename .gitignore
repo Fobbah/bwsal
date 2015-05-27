@@ -3,3 +3,9 @@ BasicAIModule/Debug/
 lib/
 BWSAL/Release/
 BasicAIModule/Release/
+external_libraries/BWAPI/
+external_libraries/BWTAlib_2.2/
+RushBot/Debug/
+RushBot/Release/
+Release/
+Debug/

@@ -1,10 +1,11 @@
 #include "RushBot.h"
-#include "../Addons/Util.h"
 using namespace BWAPI;
+
+namespace BWSAL {
 
 void RushBot::onStart()
 {
-
+	/*
   this->showManagerAssignments=false;
   if (Broodwar->isReplay()) return;
   // Enable some cheat flags
@@ -13,6 +14,7 @@ void RushBot::onStart()
   BWTA::readMap();
   BWTA::analyze();
   this->analyzed=true;
+  
   this->buildManager       = new BuildManager(&this->arbitrator);
   this->techManager        = new TechManager(&this->arbitrator);
   this->upgradeManager     = new UpgradeManager(&this->arbitrator);
@@ -216,11 +218,12 @@ void RushBot::onStart()
   this->workerManager->enableAutoBuild();
   this->workerManager->setAutoBuildPriority(40);
   this->baseManager->setRefineryBuildPriority(30);
-
+  */
 }
 
 RushBot::~RushBot()
 {
+	/*
   delete this->buildManager;
   delete this->techManager;
   delete this->upgradeManager;
@@ -234,6 +237,7 @@ RushBot::~RushBot()
   delete this->borderManager;
   delete this->unitGroupManager;
   delete this->enhancedUI;
+  */
 }
 void RushBot::onEnd(bool isWinner)
 {
@@ -241,6 +245,7 @@ void RushBot::onEnd(bool isWinner)
 }
 void RushBot::onFrame()
 {
+	/*
   if (Broodwar->isReplay()) return;
   if (!this->analyzed) return;
   Broodwar->drawTextScreen(300,0,"%s",rush_mode.c_str());
@@ -302,10 +307,12 @@ void RushBot::onFrame()
   {
     Broodwar->drawCircleMap(u->getPosition().x(),u->getPosition().y(),20,Colors::Red);
   }
+  */
 }
 
 void RushBot::onUnitDestroy(BWAPI::Unit* unit)
 {
+	/*
   if (Broodwar->isReplay()) return;
   this->arbitrator.onRemoveObject(unit);
   this->buildManager->onRemoveUnit(unit);
@@ -316,34 +323,44 @@ void RushBot::onUnitDestroy(BWAPI::Unit* unit)
   this->defenseManager->onRemoveUnit(unit);
   this->informationManager->onUnitDestroy(unit);
   this->baseManager->onRemoveUnit(unit);
+  */
 }
 
 void RushBot::onUnitDiscover(BWAPI::Unit* unit)
 {
+	/*
   if (Broodwar->isReplay()) return;
   this->informationManager->onUnitDiscover(unit);
   this->unitGroupManager->onUnitDiscover(unit);
+  */
 }
 void RushBot::onUnitEvade(BWAPI::Unit* unit)
 {
+	/*
   if (Broodwar->isReplay()) return;
   this->informationManager->onUnitEvade(unit);
   this->unitGroupManager->onUnitEvade(unit);
+  */
 }
 
 void RushBot::onUnitMorph(BWAPI::Unit* unit)
 {
+	/*
   if (Broodwar->isReplay()) return;
   this->unitGroupManager->onUnitMorph(unit);
+  */
 }
 void RushBot::onUnitRenegade(BWAPI::Unit* unit)
 {
+	/*
   if (Broodwar->isReplay()) return;
   this->unitGroupManager->onUnitRenegade(unit);
+  */
 }
 
 void RushBot::onSendText(std::string text)
 {
+	/*
   if (Broodwar->isReplay())
   {
     Broodwar->sendText("%s",text.c_str());
@@ -396,4 +413,7 @@ void RushBot::onSendText(std::string text)
     }
   }
   Broodwar->sendText("%s",text.c_str());
+  */
+}
+
 }
