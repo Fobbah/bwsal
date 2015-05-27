@@ -11,8 +11,8 @@ namespace BWSAL
       static DefenseManager* create( UnitArbitrator* arbitrator, BorderManager* borderManager );
       static DefenseManager* getInstance();
       static void destroy();
-      virtual void onOffer( std::set< BWAPI::Unit* > units );
-      virtual void onRevoke( BWAPI::Unit* unit, double bid );
+      virtual void onOffer( std::set< BWAPI::Unit > units );
+      virtual void onRevoke( BWAPI::Unit unit, double bid );
       virtual void onFrame();
       virtual std::string getName() const;
 
@@ -35,7 +35,7 @@ namespace BWSAL
       UnitArbitrator* m_arbitrator;
       std::set< BWTA::Chokepoint* > m_myBorder;
       std::vector< BWTA::Chokepoint* > m_myBorderVector;
-      std::map< BWAPI::Unit*, DefenseData > m_defenders;
+      std::map< BWAPI::Unit, DefenseData > m_defenders;
       static DefenseManager* s_defenseManager;
   };
 }

@@ -360,14 +360,14 @@ namespace BWSAL
   };
 
 
-  class UnitGroup : public std::set< BWAPI::Unit* >
+  class UnitGroup : public std::set< BWAPI::Unit >
   {
     public:
-      static UnitGroup& getUnitGroup( std::set< BWAPI::Unit* > &units )
+      static UnitGroup& getUnitGroup( std::set< BWAPI::Unit > &units )
       {
         return *( ( UnitGroup* )( &units ) );
       }
-      static const UnitGroup& getUnitGroup( const std::set< BWAPI::Unit* > &units )
+      static const UnitGroup& getUnitGroup( const std::set< BWAPI::Unit > &units )
       {
         return *( ( UnitGroup* )( &units ) );
       }
@@ -390,8 +390,8 @@ namespace BWSAL
       UnitGroup operator()( int f1, int f2, int f3, int f4, int f5 ) const;
       UnitGroup operator()( FliterAttributeScalar a, const char* compare, double value ) const;
       UnitGroup operator()( FliterAttributeScalar a, const char* compare, int value ) const;
-      UnitGroup operator()( BWAPI::Player* player ) const;
-      UnitGroup operator()( FilterAttributeUnit a, BWAPI::Unit* unit ) const;
+      UnitGroup operator()( BWAPI::Player player ) const;
+      UnitGroup operator()( FilterAttributeUnit a, BWAPI::Unit unit ) const;
       UnitGroup operator()( FilterAttributeType a, BWAPI::UnitType type ) const;
       UnitGroup operator()( FilterAttributeType a, BWAPI::TechType type ) const;
       UnitGroup operator()( FilterAttributeType a, BWAPI::UpgradeType type ) const;
@@ -406,8 +406,8 @@ namespace BWSAL
       UnitGroup not( int f1, int f2, int f3, int f4, int f5 ) const;
       UnitGroup not( FliterAttributeScalar a, const char* compare, double value ) const;
       UnitGroup not( FliterAttributeScalar a, const char* compare, int value ) const;
-      UnitGroup not( BWAPI::Player* player ) const;
-      UnitGroup not( FilterAttributeUnit a, BWAPI::Unit* unit ) const;
+      UnitGroup not( BWAPI::Player player ) const;
+      UnitGroup not( FilterAttributeUnit a, BWAPI::Unit unit ) const;
       UnitGroup not( FilterAttributeType a, BWAPI::UnitType type ) const;
       UnitGroup not( FilterAttributeType a, BWAPI::TechType type ) const;
       UnitGroup not( FilterAttributeType a, BWAPI::UpgradeType type ) const;
@@ -421,15 +421,15 @@ namespace BWSAL
       UnitGroup& operator &= ( const UnitGroup& other ); // Intersection
       UnitGroup& operator ^= ( const UnitGroup& other ); // Symmetric difference
       UnitGroup& operator -= ( const UnitGroup& other ); // Difference
-      BWAPI::Unit* getNearest( BWAPI::Position position ) const;
-      bool contains( BWAPI::Unit* u ) const;
+      BWAPI::Unit getNearest( BWAPI::Position position ) const;
+      bool contains( BWAPI::Unit u ) const;
       BWAPI::Position getCenter() const;
 
       /** Orders the unit to attack move to the specified location. */
       bool attack( BWAPI::Position target, bool shiftQueueCommand = false ) const;
 
       /** Orders the unit to attack the specified unit. */
-      bool attack( BWAPI::Unit* target, bool shiftQueueCommand = false ) const;
+      bool attack( BWAPI::Unit target, bool shiftQueueCommand = false ) const;
 
       /** Orders the unit to build the given unit type at the given position. Note that if the player does not
        * have enough resources when the unit attempts to place the building down, the order will fail. The
@@ -464,7 +464,7 @@ namespace BWSAL
 
       /** Orders the unit to set its rally unit to the specified unit.
        * \see Unit::setRallyPosition, Unit::getRallyPosition, Unit::getRallyUnit. */
-      bool setRallyPoint( BWAPI::Unit* target ) const;
+      bool setRallyPoint( BWAPI::Unit target ) const;
 
       /** Orders the unit to move from its current position to the specified position.
        * \see Unit::isMoving.  */
@@ -482,11 +482,11 @@ namespace BWSAL
 
       /** Orders the unit to follow the specified unit.
        * \see Unit::isFollowing. */
-      bool follow( BWAPI::Unit* target, bool shiftQueueCommand = false ) const;
+      bool follow( BWAPI::Unit target, bool shiftQueueCommand = false ) const;
 
       /** Orders the unit to gather the specified unit ( must be mineral or refinery type ).
        * \see Unit::isGatheringGas, Unit::isGatheringMinerals. */
-      bool gather( BWAPI::Unit* target, bool shiftQueueCommand = false ) const;
+      bool gather( BWAPI::Unit target, bool shiftQueueCommand = false ) const;
 
       /** Orders the unit to return its cargo to a nearby resource depot such as a Command Center. Only
        * workers that are carrying minerals or gas can be ordered to return cargo.
@@ -496,7 +496,7 @@ namespace BWSAL
       /** Orders the unit to repair the specified unit. Only Terran SCVs can be ordered to repair, and the
        * target must be a mechanical Terran unit or building.
        * \see Unit::isRepairing. */
-      bool repair( BWAPI::Unit* target, bool shiftQueueCommand = false ) const;
+      bool repair( BWAPI::Unit target, bool shiftQueueCommand = false ) const;
 
       /** Orders the unit to burrow. Either the unit must be a Zerg Lurker, or the unit must be a Zerg ground
        * unit and burrow tech must be researched.
@@ -534,11 +534,11 @@ namespace BWSAL
 
       /** Orders the unit to load the target unit.
        * \see Unit::unload, Unit::unloadAll, Unit::getLoadedUnits, Unit:isLoaded. */
-      bool load( BWAPI::Unit* target, bool shiftQueueCommand = false ) const;
+      bool load( BWAPI::Unit target, bool shiftQueueCommand = false ) const;
 
       /** Orders the unit to unload the target unit.
        * \see Unit::load, Unit::unloadAll, Unit::getLoadedUnits, Unit:isLoaded. */
-      bool unload( BWAPI::Unit* target ) const;
+      bool unload( BWAPI::Unit target ) const;
 
       /** Orders the unit to unload all loaded units at the unit's current position.
        * \see Unit::load, Unit::unload, Unit::unloadAll, Unit::getLoadedUnits, Unit:isLoaded. */
@@ -555,7 +555,7 @@ namespace BWSAL
 
       /** Works like the right click in the GUI. Right click on a mineral patch to order a worker to mine,
        * right click on an enemy to attack it. */
-      bool rightClick( BWAPI::Unit* target, bool shiftQueueCommand = false ) const;
+      bool rightClick( BWAPI::Unit target, bool shiftQueueCommand = false ) const;
 
       /** Orders the SCV to stop constructing the building, and the building is left in a partially complete
        * state until it is canceled, destroyed, or completed.
@@ -595,6 +595,6 @@ namespace BWSAL
 
       /** Orders the unit to use a tech requiring a unit target ( ie Irradiate ). Returns true if it is a valid
        * tech.*/
-      bool useTech( BWAPI::TechType tech, BWAPI::Unit* target ) const;
+      bool useTech( BWAPI::TechType tech, BWAPI::Unit target ) const;
   };
 }

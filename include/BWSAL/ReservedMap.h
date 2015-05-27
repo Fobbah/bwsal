@@ -13,7 +13,7 @@ namespace BWSAL
       void freeTiles( BWAPI::TilePosition position, int width = 1, int height = 1 );
       bool isReserved( int x, int y ) const;
       bool isReserved( BWAPI::TilePosition p ) const;
-      bool canBuildHere( BWAPI::Unit* builder, BWAPI::TilePosition position, BWAPI::UnitType type ) const;
+      bool canBuildHere( BWAPI::Unit builder, BWAPI::TilePosition position, BWAPI::UnitType type ) const;
       BWAPI::UnitType getReservedType( int x, int y ) const;
       BWAPI::UnitType getReservedType( BWAPI::TilePosition p ) const;
     private:

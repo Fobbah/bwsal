@@ -11,10 +11,10 @@ namespace BWSAL
       static WorkerManager* create( UnitArbitrator* aribtrator, BaseManager* baseManager );
       static WorkerManager* getInstance();
       static void destroy();
-      virtual void onOffer( std::set< BWAPI::Unit* > units );
-      virtual void onRevoke( BWAPI::Unit* unit, double bid );
+      virtual void onOffer( std::set< BWAPI::Unit > units );
+      virtual void onRevoke( BWAPI::Unit unit, double bid );
       virtual void onFrame();
-      virtual void onUnitComplete( BWAPI::Unit* unit );
+      virtual void onUnitComplete( BWAPI::Unit unit );
       virtual std::string getName() const;
 
       void setWorkersPerGas( int count );
@@ -32,8 +32,8 @@ namespace BWSAL
       {
         public:
           WorkerData() : m_resource( NULL ), m_newResource( NULL ), m_lastFrameSpam( NULL ) {}
-          BWAPI::Unit* m_resource;
-          BWAPI::Unit* m_newResource;
+          BWAPI::Unit m_resource;
+          BWAPI::Unit m_newResource;
           int m_lastFrameSpam;
       };
       WorkerManager();
@@ -45,11 +45,11 @@ namespace BWSAL
 
       void rebalanceWorkers();
       void updateWorkerAssignments();
-      std::map< BWAPI::Unit*, WorkerData > m_workers;
-      std::map< BWAPI::Unit*, std::set< BWAPI::Unit* > > m_currentWorkers;
-      std::map< BWAPI::Unit*, Base* > m_resourceBase;
-      std::map< BWAPI::Unit*, int > m_desiredWorkerCount;
-      std::vector< std::pair< BWAPI::Unit*, int > > m_mineralOrder;
+      std::map< BWAPI::Unit, WorkerData > m_workers;
+      std::map< BWAPI::Unit, std::set< BWAPI::Unit > > m_currentWorkers;
+      std::map< BWAPI::Unit, Base* > m_resourceBase;
+      std::map< BWAPI::Unit, int > m_desiredWorkerCount;
+      std::vector< std::pair< BWAPI::Unit, int > > m_mineralOrder;
       int m_mineralOrderIndex;
       int m_lastSCVBalance;
       std::set< Base* > m_basesCache;

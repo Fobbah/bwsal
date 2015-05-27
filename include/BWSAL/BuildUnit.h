@@ -3,7 +3,7 @@
 #include "BWSAL/MetaUnit.h"
 namespace BWAPI
 {
-  class Unit;
+	typedef UnitInterface *Unit;
 }
 namespace BWSAL
 {
@@ -14,15 +14,15 @@ namespace BWSAL
       virtual BuildUnit* getBuildUnit();
       virtual BuildType getType() const;
       BuildUnit( Task* task );
-      BuildUnit( BWAPI::Unit* unit );
-      void setUnit( BWAPI::Unit* unit );
+      BuildUnit( BWAPI::Unit unit );
+      void setUnit( BWAPI::Unit unit );
       void setTask( Task* task );
       bool isReal() const;
-      BWAPI::Unit* getUnit() const;
+      BWAPI::Unit getUnit() const;
       Task* getTask() const;
-      static BuildUnit* getBuildUnit( BWAPI::Unit* unit );
-      static BuildUnit* getBuildUnitIfExists( BWAPI::Unit* unit );
-      static void setBuildUnit( BWAPI::Unit* unit, BuildUnit* buildUnit );
+      static BuildUnit* getBuildUnit( BWAPI::Unit unit );
+      static BuildUnit* getBuildUnitIfExists( BWAPI::Unit unit );
+      static void setBuildUnit( BWAPI::Unit unit, BuildUnit* buildUnit );
       struct state
       {
         int m_availableSince;
@@ -35,7 +35,7 @@ namespace BWSAL
       state m_planningData;
     private:
       void initializeInformation();
-      BWAPI::Unit* m_unit;
+      BWAPI::Unit m_unit;
       Task* m_task;
   };
 }

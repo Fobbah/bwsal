@@ -6,6 +6,6 @@ namespace BWSAL
   class BuildingPlacer
   {
     public:
-      virtual BWAPI::TilePosition findBuildLocation( ReservedMap* reserveMap, BWAPI::UnitType unitType, BWAPI::TilePosition seedLocation, BWAPI::Unit* builder = NULL ) = 0;
+      virtual BWAPI::TilePosition findBuildLocation( ReservedMap* reserveMap, BWAPI::UnitType unitType, BWAPI::TilePosition seedLocation, BWAPI::Unit builder = NULL ) = 0;
   };
 }

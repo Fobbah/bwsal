@@ -14,7 +14,7 @@ namespace BWSAL
       static BaseManager* getInstance();
       static void destroy();
       virtual void onFrame();
-      virtual void onUnitDestroy( BWAPI::Unit* unit );
+      virtual void onUnitDestroy( BWAPI::Unit unit );
       Base* getBase( BWTA::BaseLocation* location ) const;
 
       Base* expandNow( BWTA::BaseLocation* location = NULL, bool getGas = true );

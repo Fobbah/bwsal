@@ -500,6 +500,6 @@ namespace BWSAL
     }
     this->inUpdate = false;
   }
-  typedef Arbitrator< BWAPI::Unit*, double > UnitArbitrator;
-  typedef Controller< BWAPI::Unit*, double > UnitController;
+  typedef Arbitrator< BWAPI::Unit, double > UnitArbitrator;
+  typedef Controller< BWAPI::Unit, double > UnitController;
 }

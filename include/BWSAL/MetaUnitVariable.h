@@ -3,7 +3,7 @@
 #include <BWSAL/MetaUnit.h>
 namespace BWAPI
 {
-  class Unit;
+	typedef UnitInterface *Unit;
 }
 namespace BWSAL
 {

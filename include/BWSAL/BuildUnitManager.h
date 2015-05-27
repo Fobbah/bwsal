@@ -10,7 +10,7 @@ namespace BWSAL
       static BuildUnitManager* create();
       static BuildUnitManager* getInstance();
       static void destroy();
-      virtual void onUnitEvade( BWAPI::Unit* unit );
+      virtual void onUnitEvade( BWAPI::Unit unit );
       std::set< BuildUnit* >& getUnits();
       void resetPlanningData();
 

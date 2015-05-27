@@ -15,8 +15,8 @@ namespace BWSAL
       static TaskExecutor* create( UnitArbitrator* arbitrator, BuildEventTimeline* timeline, ReservedMap* reserveMap, BuildingPlacer* defaultBuildingPlacer );
       static TaskExecutor* getInstance();
       static void destroy();
-      virtual void onOffer( std::set< BWAPI::Unit* > units );
-      virtual void onRevoke( BWAPI::Unit* unit, double bid );
+      virtual void onOffer( std::set< BWAPI::Unit > units );
+      virtual void onRevoke( BWAPI::Unit unit, double bid );
       virtual std::string getName() const;
       virtual void onFrame();
       void run( Task* t );
@@ -39,7 +39,7 @@ namespace BWSAL
       void computeIsReady( Task* t );
       void getReady( Task* t );
       void execute( Task* t );
-      std::set< BWAPI::Unit* > m_builders;
+      std::set< BWAPI::Unit > m_builders;
       std::map< BuildType, int > m_runningCount;
   };
 }
