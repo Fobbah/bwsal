@@ -285,6 +285,45 @@ void BasicAIModule::onSendText( std::string text )
   {
     m_buildOrderManager->buildAdditional( 1, BuildTypes::getBuildType( text ), 300 );
   }
+  else if (text.find("BAI") != std::string::npos)
+  {
+	  std::vector<std::string> commandArgs;
+	  istringstream iss(text);
+	  do
+	  {
+		  string sub;
+		  iss >> sub;
+		  if (sub.length() > 0)
+		  {
+			  commandArgs.push_back(sub);
+		  }
+	  } while (iss);
+	  if (commandArgs.size() >= 2)
+	  {
+		  BWAPI::Broodwar->printf("BAI COMMAND: %s", commandArgs[1].c_str());
+		  for (unsigned i = 2; i < commandArgs.size(); i++)
+		  {
+			  BWAPI::Broodwar->printf("BAI COMMAND ARGUMENT: %s", commandArgs[i].c_str());
+		  }
+		  if (commandArgs[1] == "build")
+		  {
+			  if (commandArgs.size() >= 4)
+			  {
+				  int count = 0;
+				  try {
+					  count = stoi(commandArgs[2]);
+				  }
+				  catch (invalid_argument argument){}
+				  std::string unitType = commandArgs[3];
+				  BWAPI::Broodwar->printf("BAI BUILD %d %s", count, unitType.c_str());
+				  if (count > 0 && count < 200)
+				  {
+					  m_buildOrderManager->buildAdditional(count, BuildTypes::getBuildType(unitType), 300);
+				  }
+			  }
+		  }
+	  }
+  }
   else
   {
     BWAPI::Broodwar->printf( "Unrecognized command: '%s'", text.c_str() );

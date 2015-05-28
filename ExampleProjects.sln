@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BWSAL", "BWSAL\BWSAL.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RushBot", "RushBot\RushBot.vcxproj", "{25AF3621-C387-4DE0-8208-0B81E04268BD}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BasicAIClient", "BasicAIClient\BasicAIClient.vcxproj", "{AE3B9DC4-5FBB-4B57-8AB4-0D84D8649D78}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -29,6 +31,10 @@ Global
 		{25AF3621-C387-4DE0-8208-0B81E04268BD}.Debug|Win32.Build.0 = Debug|Win32
 		{25AF3621-C387-4DE0-8208-0B81E04268BD}.Release|Win32.ActiveCfg = Release|Win32
 		{25AF3621-C387-4DE0-8208-0B81E04268BD}.Release|Win32.Build.0 = Release|Win32
+		{AE3B9DC4-5FBB-4B57-8AB4-0D84D8649D78}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AE3B9DC4-5FBB-4B57-8AB4-0D84D8649D78}.Debug|Win32.Build.0 = Debug|Win32
+		{AE3B9DC4-5FBB-4B57-8AB4-0D84D8649D78}.Release|Win32.ActiveCfg = Release|Win32
+		{AE3B9DC4-5FBB-4B57-8AB4-0D84D8649D78}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
