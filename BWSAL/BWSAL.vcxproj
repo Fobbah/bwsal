@@ -91,6 +91,7 @@
     <ClCompile Include="Source\BuildUnitManager.cpp" />
     <ClCompile Include="Source\BWSAL.cpp" />
     <ClCompile Include="Source\DefenseManager.cpp" />
+    <ClCompile Include="Source\EnhancedUI.cpp" />
     <ClCompile Include="Source\InformationManager.cpp" />
     <ClCompile Include="Source\MacroTask.cpp" />
     <ClCompile Include="Source\MetaUnitVariable.cpp" />
@@ -123,6 +124,7 @@
     <ClInclude Include="..\include\BWSAL\BuildUnitManager.h" />
     <ClInclude Include="..\include\BWSAL\Controller.h" />
     <ClInclude Include="..\include\BWSAL\DefenseManager.h" />
+    <ClInclude Include="..\include\BWSAL\EnhancedUI.h" />
     <ClInclude Include="..\include\BWSAL\Heap.h" />
     <ClInclude Include="..\include\BWSAL\InformationManager.h" />
     <ClInclude Include="..\include\BWSAL\MacroTask.h" />
