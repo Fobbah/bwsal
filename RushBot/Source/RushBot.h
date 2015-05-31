@@ -38,7 +38,7 @@ public:
   BWSAL::WorkerManager*      m_workerManager;
   BWSAL::BuildUnitManager*   m_buildUnitManager;
   BWSAL::ScoutManager*       m_scoutManager;
-  BWSAL::DefenseManager*     m_defenseManager;
+  //BWSAL::DefenseManager*     m_defenseManager;
   BWSAL::BuildOrderManager*  m_buildOrderManager;
   BWSAL::SupplyManager*      m_supplyManager;
   EnhancedUI*                m_enhancedUI;

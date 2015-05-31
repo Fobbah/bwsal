@@ -24,7 +24,7 @@ void RushBot::onStart()
 	m_taskExecutor = TaskExecutor::create(m_unitArbitrator, m_buildEventTimeline, m_reservedMap, m_buildingPlacer);
 	m_workerManager = WorkerManager::create(m_unitArbitrator, m_baseManager);
 	m_scoutManager = ScoutManager::create(m_unitArbitrator, m_informationManager);
-	m_defenseManager = DefenseManager::create(m_unitArbitrator, m_borderManager);
+	//m_defenseManager = DefenseManager::create(m_unitArbitrator, m_borderManager);
 	m_buildOrderManager = BuildOrderManager::create(m_taskScheduler, m_taskExecutor, m_buildUnitManager);
 	m_supplyManager = SupplyManager::create(m_buildOrderManager, m_taskScheduler);
 	m_enhancedUI = new EnhancedUI();
@@ -43,7 +43,7 @@ void RushBot::onStart()
 	m_modules.push_back(m_taskExecutor);
 	m_modules.push_back(m_workerManager);
 	m_modules.push_back(m_scoutManager);
-	m_modules.push_back(m_defenseManager);
+	//m_modules.push_back(m_defenseManager);
 
 
   BWAPI::Race race = Broodwar->self()->getRace();
