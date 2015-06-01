@@ -26,6 +26,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RushBotClient", "RushBotCli
 		{DBD449BF-401A-4B1F-89A2-8811DA9E9E5F} = {DBD449BF-401A-4B1F-89A2-8811DA9E9E5F}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlitzBot", "BlitzBot\BlitzBot.vcxproj", "{E8B4F2BE-DE31-4C93-BB89-38FE792E57F4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlitzBotClient", "BlitzBotClient\BlitzBotClient.vcxproj", "{FBFD358C-773C-48DB-980C-271A779C0548}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -52,6 +56,14 @@ Global
 		{FC5039D5-1ED3-4EE1-8446-806D0DEAA87F}.Debug|Win32.Build.0 = Debug|Win32
 		{FC5039D5-1ED3-4EE1-8446-806D0DEAA87F}.Release|Win32.ActiveCfg = Release|Win32
 		{FC5039D5-1ED3-4EE1-8446-806D0DEAA87F}.Release|Win32.Build.0 = Release|Win32
+		{E8B4F2BE-DE31-4C93-BB89-38FE792E57F4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E8B4F2BE-DE31-4C93-BB89-38FE792E57F4}.Debug|Win32.Build.0 = Debug|Win32
+		{E8B4F2BE-DE31-4C93-BB89-38FE792E57F4}.Release|Win32.ActiveCfg = Release|Win32
+		{E8B4F2BE-DE31-4C93-BB89-38FE792E57F4}.Release|Win32.Build.0 = Release|Win32
+		{FBFD358C-773C-48DB-980C-271A779C0548}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FBFD358C-773C-48DB-980C-271A779C0548}.Debug|Win32.Build.0 = Debug|Win32
+		{FBFD358C-773C-48DB-980C-271A779C0548}.Release|Win32.ActiveCfg = Release|Win32
+		{FBFD358C-773C-48DB-980C-271A779C0548}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
