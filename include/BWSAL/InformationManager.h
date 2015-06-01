@@ -10,8 +10,10 @@ namespace BWSAL
       static InformationManager* create();
       static InformationManager* getInstance();
       static void destroy();
-      virtual void onUnitDiscover( BWAPI::Unit unit );
-      virtual void onUnitEvade( BWAPI::Unit unit );
+	  virtual void onFrame();
+	  virtual void onUnitDiscover(BWAPI::Unit unit) override;
+	  virtual void onUnitHide(BWAPI::Unit unit) override;
+	  virtual void onUnitEvade(BWAPI::Unit unit) override;
       virtual void onUnitDestroy( BWAPI::Unit unit );
       BWAPI::Player getPlayer( BWAPI::Unit unit ) const;
       BWAPI::UnitType getType( BWAPI::Unit unit ) const;
@@ -34,6 +36,8 @@ namespace BWSAL
           BWAPI::Player m_player;
           int m_lastSeenTime;
           bool m_exists;
+
+		  void update(BWAPI::Unit u);
       };
       void updateBuildTime( BWAPI::UnitType type, int time );
       std::map< BWAPI::Unit, UnitData > m_savedData;
