@@ -91,12 +91,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\BwapiEventLogger.cc" />
     <ClCompile Include="Source\Dll.cpp" />
     <ClCompile Include="Source\BlitzBot.cpp" />
     <ClCompile Include="Source\OffenseManager.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\BlitzBot.h" />
+    <ClInclude Include="Source\BwapiEventLogger.h" />
+    <ClInclude Include="Source\bwlog.h" />
     <ClInclude Include="Source\OffenseManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,16 +1,22 @@
 #include "BlitzBot.h"
+#include "bwlog.h"
 using namespace BWAPI;
 
 namespace BWSAL {
 
 void RushBot::onStart()
 {
+	FILELog::ReportingLevel() = logDEBUG1;
+	FILE* log_fd = fopen("blitz_bot.log", "w");
+	Output2FILE::Stream() = log_fd;
+
 	BWSAL::BWSAL_init();
 	Broodwar->enableFlag(Flag::UserInput);
 	BWTA::readMap();
 	BWTA::analyze();
 	BWSAL::resetLog();
 
+	m_eventLogger = new BWSAL::BwapiEventLogger();
 	m_informationManager = InformationManager::create();
 	m_borderManager = BorderManager::create(m_informationManager);
 	m_baseManager = BaseManager::create(m_borderManager);
@@ -33,6 +39,7 @@ void RushBot::onStart()
 	m_buildEventTimeline->initialize();
 	m_scoutManager->initialize();
 
+	m_modules.push_back(m_eventLogger);
 	m_modules.push_back(m_informationManager);
 	m_modules.push_back(m_borderManager);
 	m_modules.push_back(m_baseManager);
@@ -115,7 +122,6 @@ void RushBot::onStart()
       }
     }
   }
-
 
   if (race == Races::Zerg)
   {
@@ -357,6 +363,15 @@ void RushBot::onUnitEvade(BWAPI::Unit unit)
 	}
 }
 
+void RushBot::onUnitHide(BWAPI::Unit unit)
+{
+	if (Broodwar->isReplay()) return;
+	for (BWAPI::AIModule* m : m_modules)
+	{
+		m->onUnitHide(unit);
+	}
+}
+
 void RushBot::onUnitMorph(BWAPI::Unit unit)
 {
 	if (Broodwar->isReplay()) return;
@@ -383,56 +398,42 @@ void RushBot::onSendText(std::string text)
 	}
 
 	BWAPI::Broodwar->sendText(text.c_str());
+}
 
-	/*
-  UnitType type=UnitTypes::getUnitType(text);
-  if (text=="debug")
-  {
-    if (this->showManagerAssignments==false)
-    {
-      this->showManagerAssignments=true;
-      this->buildOrderManager->setDebugMode(true);
-      this->scoutManager->setDebugMode(true);
-    }
-    else
-    {
-      this->showManagerAssignments=false;
-      this->buildOrderManager->setDebugMode(false);
-      this->scoutManager->setDebugMode(false);
-    }
-    Broodwar->printf("%s",text.c_str());
-    return;
-  }
-  if (text=="expand")
-  {
-    this->baseManager->expand();
-    Broodwar->printf("%s",text.c_str());
-    return;
-  }
-  if (type!=UnitTypes::Unknown)
-  {
-    this->buildOrderManager->buildAdditional(1,type,300);
-  }
-  else
-  {
-    TechType type=TechTypes::getTechType(text);
-    if (type!=TechTypes::Unknown)
-    {
-      this->techManager->research(type);
-    }
-    else
-    {
-      UpgradeType type=UpgradeTypes::getUpgradeType(text);
-      if (type!=UpgradeTypes::Unknown)
-      {
-        this->upgradeManager->upgrade(type);
-      }
-      else
-        Broodwar->printf("You typed '%s'!",text.c_str());
-    }
-  }
-  Broodwar->sendText("%s",text.c_str());
-  */
+void RushBot::onUnitShow(BWAPI::Unit unit)
+{
+	if (Broodwar->isReplay()) return;
+	for (BWAPI::AIModule* m : m_modules)
+	{
+		m->onUnitShow(unit);
+	}
+}
+
+void RushBot::onNukeDetect(BWAPI::Position position)
+{
+	if (Broodwar->isReplay()) return;
+	for (BWAPI::AIModule* m : m_modules)
+	{
+		m->onNukeDetect(position);
+	}
+}
+
+void RushBot::onReceiveText(BWAPI::Player player, std::string text)
+{
+	if (Broodwar->isReplay()) return;
+	for (BWAPI::AIModule* m : m_modules)
+	{
+		m->onReceiveText(player, text);
+	}
+}
+
+void RushBot::onPlayerLeft(BWAPI::Player player)
+{
+	if (Broodwar->isReplay()) return;
+	for (BWAPI::AIModule* m : m_modules)
+	{
+		m->onPlayerLeft(player);
+	}
 }
 
 }

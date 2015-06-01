@@ -4,21 +4,29 @@
 #include <BWSAL.h>
 #include <BWSAL/EnhancedUI.h>
 #include "OffenseManager.h"
+#include "BwapiEventLogger.h"
 
 namespace BWSAL {
 
 class RushBot : public BWAPI::AIModule
 {
 public:
-  virtual void onStart() override;
-  virtual void onEnd(bool isWinner) override;
-  virtual void onFrame() override;
-  virtual void onUnitDiscover(BWAPI::Unit unit) override;
-  virtual void onUnitEvade(BWAPI::Unit unit) override;
-  virtual void onUnitMorph(BWAPI::Unit unit) override;
-  virtual void onUnitRenegade(BWAPI::Unit unit) override;
-  virtual void onUnitDestroy(BWAPI::Unit unit) override;
-  virtual void onSendText(std::string text) override;
+  void onStart() override;
+  void onEnd(bool isWinner) override;
+  void onFrame() override;
+  void onUnitDiscover(BWAPI::Unit unit) override;
+  void onUnitEvade(BWAPI::Unit unit) override;
+  void onUnitHide(BWAPI::Unit unit) override;
+  void onUnitMorph(BWAPI::Unit unit) override;
+  void onUnitRenegade(BWAPI::Unit unit) override;
+  void onUnitDestroy(BWAPI::Unit unit) override;
+  void onSendText(std::string text) override;
+
+  void onUnitShow(BWAPI::Unit unit) override;
+  void onNukeDetect(BWAPI::Position position) override;
+  void onReceiveText(BWAPI::Player player, std::string text) override;
+  void onPlayerLeft(BWAPI::Player player) override;
+
   ~RushBot(); //not part of BWAPI::AIModule
   void showStats(); //not part of BWAPI::AIModule
   void showPlayers();
@@ -43,6 +51,7 @@ public:
   BWSAL::BuildOrderManager*  m_buildOrderManager;
   BWSAL::SupplyManager*      m_supplyManager;
   BWSAL::OffenseManager*	 m_offenseManager;
+  BWSAL::BwapiEventLogger*   m_eventLogger;
   EnhancedUI*                m_enhancedUI;
   /*
   std::map<BWAPI::Unit*,BWAPI::UnitType> buildings;

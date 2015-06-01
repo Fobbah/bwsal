@@ -9,7 +9,6 @@
 #include <BWAPI/Client.h>
 #include <BWAPI.h>
 
-
 using namespace BWAPI;
 
 void reconnect()

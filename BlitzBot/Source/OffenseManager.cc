@@ -14,6 +14,12 @@ namespace BWSAL {
 		{
 			Broodwar->drawCircle(CoordinateType::Map, lastTarget.x, lastTarget.y, 80, Colors::Red, false);
 		}
+
+		for (Unit u : mTargets)
+		{
+			BWAPI::Position pos = m_informationManager->getLastPosition(u);
+			Broodwar->drawCircle(CoordinateType::Map, pos.x, pos.y, 5, Colors::Orange, true);
+		}
 	}
 
 	void OffenseManager::onUnitDiscover(BWAPI::Unit unit)
@@ -96,7 +102,7 @@ namespace BWSAL {
 			
 			if (isPositionValid(pos))
 			{
-				printf("ATTACKING UNIT:%s, %d@%d\n", u->getType().toString().c_str(), pos.x, pos.y);
+				printf("ATTACKING UNIT:%s, %d@%d\n", m_informationManager->getType(u).toString().c_str(), pos.x, pos.y);
 				return pos;
 			}
 		}
