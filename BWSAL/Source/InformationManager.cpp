@@ -14,7 +14,7 @@ namespace BWSAL
     s_informationManager = new InformationManager();
     return s_informationManager;
   }
-
+  
   InformationManager* InformationManager::getInstance()
   {
     return s_informationManager;
@@ -63,14 +63,28 @@ namespace BWSAL
     s_informationManager = NULL;
   }
 
+  void InformationManager::UnitData::update(BWAPI::Unit unit)
+  {
+	  m_player = unit->getPlayer();
+	  m_type = unit->getType();
+	  m_position = unit->getPosition();
+	  m_lastSeenTime = BWAPI::Broodwar->getFrameCount();
+  }
+
+  void InformationManager::onFrame()
+  {
+	  for (auto& it : m_savedData)
+	  {
+		  BWAPI::Unit u = it.first;
+		  if (u->exists())
+		  {
+			  it.second.update(u);
+		  }
+	  }
+  }
+
   void InformationManager::onUnitDiscover( BWAPI::Unit unit )
   {
-    // Sanity check
-    if ( unit == NULL )
-    {
-      return;
-    }
-
     m_savedData[unit].m_exists = true;
 
     // If this is an enemy unit, try to infer build time and start location, and base location
@@ -106,30 +120,17 @@ namespace BWSAL
     }
   }
 
-  void InformationManager::onUnitEvade( BWAPI::Unit unit )
+  void InformationManager::onUnitEvade(BWAPI::Unit unit)
   {
-    // Sanity check
-    if ( unit == NULL )
-    {
-      return;
-    }
+  }
 
-    // Save what we know about the unit before we lose access to it
-    m_savedData[unit].m_player = unit->getPlayer();
-    m_savedData[unit].m_type = unit->getType();
-    m_savedData[unit].m_position = unit->getPosition();
-    m_savedData[unit].m_lastSeenTime = BWAPI::Broodwar->getFrameCount();
+  void InformationManager::onUnitHide( BWAPI::Unit unit )
+  {
   }
 
   void InformationManager::onUnitDestroy( BWAPI::Unit unit )
   {
-    // Sanity check
-    if ( unit == NULL )
-    {
-      return;
-    }
-
-    onUnitEvade( unit );
+    onUnitHide( unit );
     m_savedData[unit].m_exists = false;
     if ( BWAPI::Broodwar->self()->isEnemy( unit->getPlayer() ) )
     {
@@ -148,11 +149,6 @@ namespace BWSAL
 
   BWAPI::Player InformationManager::getPlayer( BWAPI::Unit unit ) const
   {
-    // Sanity check
-    if ( unit == NULL )
-    {
-      return NULL;
-    }
     if ( unit->exists() )
     {
       return unit->getPlayer();
@@ -167,12 +163,6 @@ namespace BWSAL
 
   BWAPI::UnitType InformationManager::getType( BWAPI::Unit unit ) const
   {
-    // Sanity check
-    if ( unit == NULL )
-    {
-      return BWAPI::UnitTypes::None;
-    }
-
     if ( unit->exists() )
     {
       return unit->getType();
@@ -187,12 +177,6 @@ namespace BWSAL
 
   BWAPI::Position InformationManager::getLastPosition( BWAPI::Unit unit ) const
   {
-    // Sanity check
-    if ( unit == NULL )
-    {
-      return BWAPI::Positions::None;
-    }
-
     if ( unit->exists() )
     {
       return unit->getPosition();
@@ -207,12 +191,6 @@ namespace BWSAL
 
   int InformationManager::getLastSeenTime( BWAPI::Unit unit ) const
   {
-    // Sanity check
-    if ( unit == NULL )
-    {
-      return NEVER;
-    }
-
     if ( unit->exists() )
     {
       return BWAPI::Broodwar->getFrameCount();
@@ -227,12 +205,6 @@ namespace BWSAL
 
   bool InformationManager::exists( BWAPI::Unit unit ) const
   {
-    // Sanity check
-    if ( unit == NULL )
-    {
-      return false;
-    }
-
     if ( unit->exists() )
     {
       return true;
