@@ -14,7 +14,7 @@ BWSAL has been upgraded to use:
 - Download BWAPI 4.1.2 (source): https://github.com/bwapi/bwapi/archive/v4.1.2.zip
     - Extract to BWSAL_DIRECTORY/external_libraries/BWAPI/
   
-- Open BWSAL_DIRECTORY/external_libraries/BWAPI.sln in VS2013
+- Open BWSAL_DIRECTORY/external_libraries/BWAPI/bwapi/bwapi.sln in VS2013
     - Compile in VS2013
   
 - Open BWSAL_DIRECTORY/ExampleProjects.sln
