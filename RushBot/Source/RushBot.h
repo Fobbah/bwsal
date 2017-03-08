@@ -42,22 +42,7 @@ public:
   BWSAL::BuildOrderManager*  m_buildOrderManager;
   BWSAL::SupplyManager*      m_supplyManager;
   EnhancedUI*                m_enhancedUI;
-  /*
-  std::map<BWAPI::Unit*,BWAPI::UnitType> buildings;
-  Arbitrator<BWAPI::Unit*,double> arbitrator;
-  WorkerManager* workerManager;
-  SupplyManager* supplyManager;
-  BuildManager* buildManager;
-  TechManager* techManager;
-  UpgradeManager* upgradeManager;
-  BaseManager* baseManager;
-  ScoutManager* scoutManager;
-  BuildOrderManager* buildOrderManager;
-  DefenseManager* defenseManager;
-  InformationManager* informationManager;
-  BorderManager* borderManager;
-  UnitGroupManager* unitGroupManager;
-  */
+
   //EnhancedUI* enhancedUI;
   bool showManagerAssignments;
   std::string rush_mode;

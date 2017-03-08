@@ -24,7 +24,6 @@ void RushBot::onStart()
 	m_taskExecutor = TaskExecutor::create(m_unitArbitrator, m_buildEventTimeline, m_reservedMap, m_buildingPlacer);
 	m_workerManager = WorkerManager::create(m_unitArbitrator, m_baseManager);
 	m_scoutManager = ScoutManager::create(m_unitArbitrator, m_informationManager);
-	//m_defenseManager = DefenseManager::create(m_unitArbitrator, m_borderManager);
 	m_buildOrderManager = BuildOrderManager::create(m_taskScheduler, m_taskExecutor, m_buildUnitManager);
 	m_supplyManager = SupplyManager::create(m_buildOrderManager, m_taskScheduler);
 	m_enhancedUI = new EnhancedUI();
@@ -43,8 +42,6 @@ void RushBot::onStart()
 	m_modules.push_back(m_taskExecutor);
 	m_modules.push_back(m_workerManager);
 	m_modules.push_back(m_scoutManager);
-	//m_modules.push_back(m_defenseManager);
-
 
   BWAPI::Race race = Broodwar->self()->getRace();
   BWAPI::Race enemyRace = Broodwar->enemy()->getRace();
@@ -264,18 +261,6 @@ void RushBot::onFrame()
   if (Broodwar->isReplay()) return;
   if (!this->analyzed) return;
   Broodwar->drawTextScreen(300,0,"%s",rush_mode.c_str());
-  //this->buildManager->update();
-  //this->buildOrderManager->update();
-  //this->baseManager->update();
-  //this->workerManager->update();
-  //this->techManager->update();
-  //this->upgradeManager->update();
-  //this->supplyManager->update();
-  //this->scoutManager->update();
-  //this->enhancedUI->update();
-  //this->borderManager->update();
-//  this->defenseManager->update();
-  //this->arbitrator.update();
 
   if (Broodwar->getFrameCount()>24*50)
     this->m_scoutManager->setScoutCount(1);
@@ -302,7 +287,6 @@ void RushBot::onFrame()
       {
         int x=(*i)->getPosition().x;
         int y=(*i)->getPosition().y;
-        //std::list< std::pair< Arbitrator::Controller<BWAPI::Unit*,double>*, double> > bids=this->arbitrator.getAllBidders(*i);
 		auto bids = m_unitArbitrator->getAllBidders(*i);
         int y_off=0;
         bool first = false;
@@ -332,18 +316,6 @@ void RushBot::onUnitDestroy(BWAPI::Unit unit)
 	{
 		m->onUnitDestroy(unit);
 	}
-	/*
-  if (Broodwar->isReplay()) return;
-  this->arbitrator.onRemoveObject(unit);
-  this->buildManager->onRemoveUnit(unit);
-  this->techManager->onRemoveUnit(unit);
-  this->upgradeManager->onRemoveUnit(unit);
-  this->workerManager->onRemoveUnit(unit);
-  this->scoutManager->onRemoveUnit(unit);
-  this->defenseManager->onRemoveUnit(unit);
-  this->informationManager->onUnitDestroy(unit);
-  this->baseManager->onRemoveUnit(unit);
-  */
 }
 
 void RushBot::onUnitDiscover(BWAPI::Unit unit)
@@ -353,11 +325,6 @@ void RushBot::onUnitDiscover(BWAPI::Unit unit)
 	{
 		m->onUnitDiscover(unit);
 	}
-	/*
-  if (Broodwar->isReplay()) return;
-  this->informationManager->onUnitDiscover(unit);
-  this->unitGroupManager->onUnitDiscover(unit);
-  */
 }
 void RushBot::onUnitEvade(BWAPI::Unit unit)
 {
@@ -392,56 +359,6 @@ void RushBot::onSendText(std::string text)
 	{
 		m->onSendText(text);
 	}
-
-	/*
-  UnitType type=UnitTypes::getUnitType(text);
-  if (text=="debug")
-  {
-    if (this->showManagerAssignments==false)
-    {
-      this->showManagerAssignments=true;
-      this->buildOrderManager->setDebugMode(true);
-      this->scoutManager->setDebugMode(true);
-    }
-    else
-    {
-      this->showManagerAssignments=false;
-      this->buildOrderManager->setDebugMode(false);
-      this->scoutManager->setDebugMode(false);
-    }
-    Broodwar->printf("%s",text.c_str());
-    return;
-  }
-  if (text=="expand")
-  {
-    this->baseManager->expand();
-    Broodwar->printf("%s",text.c_str());
-    return;
-  }
-  if (type!=UnitTypes::Unknown)
-  {
-    this->buildOrderManager->buildAdditional(1,type,300);
-  }
-  else
-  {
-    TechType type=TechTypes::getTechType(text);
-    if (type!=TechTypes::Unknown)
-    {
-      this->techManager->research(type);
-    }
-    else
-    {
-      UpgradeType type=UpgradeTypes::getUpgradeType(text);
-      if (type!=UpgradeTypes::Unknown)
-      {
-        this->upgradeManager->upgrade(type);
-      }
-      else
-        Broodwar->printf("You typed '%s'!",text.c_str());
-    }
-  }
-  Broodwar->sendText("%s",text.c_str());
-  */
 }
 
 }
