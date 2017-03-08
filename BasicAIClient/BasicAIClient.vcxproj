@@ -31,9 +31,13 @@
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\project_libs.props" />
+    <Import Project="..\project_includes.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\project_libs.props" />
+    <Import Project="..\project_includes.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -44,7 +48,6 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../external_libraries/BWAPI/include;../external_libraries/BWTAlib_2.2/include;../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NOMINMAX;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -59,14 +62,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalDependencies>../external_libraries/BWAPI/lib/BWAPId.lib;../external_libraries/BWAPI/lib/BWAPIClientd.lib;../lib/BWSALd.lib;../external_libraries/BWTAlib_2.2/lib/BWTAd.lib;../external_libraries/BWTAlib_2.2/lib/libboost_filesystem-vc120-mt-gd-1_56.lib;../external_libraries/BWTAlib_2.2/lib/libboost_system-vc120-mt-gd-1_56.lib;../external_libraries/BWTAlib_2.2/lib/libboost_thread-vc120-mt-gd-1_56.lib;../external_libraries/BWTAlib_2.2/lib/libCGAL-vc120-mt-gd-4.4.lib;../external_libraries/BWTAlib_2.2/lib/libgmp-10.lib;../external_libraries/BWTAlib_2.2/lib/libmpfr-4.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>../external_libraries/BWAPI/include;../external_libraries/BWTAlib_2.2/include;../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NOMINMAX;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -83,7 +84,6 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalDependencies>../external_libraries/BWAPI/lib/BWAPI.lib;../external_libraries/BWAPI/lib/BWAPIClient.lib;../lib/BWSAL.lib;../external_libraries/BWTAlib_2.2/lib/BWTA.lib;../external_libraries/BWTAlib_2.2/lib/libboost_filesystem-vc120-mt-1_56.lib;../external_libraries/BWTAlib_2.2/lib/libboost_system-vc120-mt-1_56.lib;../external_libraries/BWTAlib_2.2/lib/libboost_thread-vc120-mt-1_56.lib;../external_libraries/BWTAlib_2.2/lib/libCGAL-vc120-mt-4.4.lib;../external_libraries/BWTAlib_2.2/lib/libgmp-10.lib;../external_libraries/BWTAlib_2.2/lib/libmpfr-4.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

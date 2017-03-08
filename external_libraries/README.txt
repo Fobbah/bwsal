@@ -3,5 +3,5 @@ external_libraries/BWAPI
 external_libraries/BWTAlib_2.2
 
 Tested Releases:
-BWAPI 4.1.1 Beta: https://github.com/bwapi/bwapi/releases
+BWAPI 4.1.2: https://github.com/bwapi/bwapi/releases
 BWTA2 2.2: https://bitbucket.org/auriarte/bwta2/downloads

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Link>
+      <AdditionalDependencies>$(SolutionDir)external_libraries/BWAPI/bwapi/lib/BWAPId.lib;$(SolutionDir)lib/BWSALd.lib;$(SolutionDir)external_libraries/BWTAlib_2.2/lib/BWTAd.lib;$(SolutionDir)external_libraries/BWTAlib_2.2/lib/libboost_filesystem-vc120-mt-gd-1_56.lib;$(SolutionDir)external_libraries/BWTAlib_2.2/lib/libboost_system-vc120-mt-gd-1_56.lib;$(SolutionDir)external_libraries/BWTAlib_2.2/lib/libboost_thread-vc120-mt-gd-1_56.lib;$(SolutionDir)external_libraries/BWTAlib_2.2/lib/libCGAL-vc120-mt-gd-4.4.lib;$(SolutionDir)external_libraries/BWTAlib_2.2/lib/libgmp-10.lib;$(SolutionDir)external_libraries/BWTAlib_2.2/lib/libmpfr-4.lib;$(SolutionDir)external_libraries\BWAPI\bwapi\Debug\BWAPIClient.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Link>
+      <AdditionalDependencies>$(SolutionDir)external_libraries/BWAPI/bwapi/lib/BWAPI.lib;$(SolutionDir)lib/BWSAL.lib;$(SolutionDir)external_libraries/BWTAlib_2.2/lib/BWTA.lib;$(SolutionDir)external_libraries/BWTAlib_2.2/lib/libboost_filesystem-vc120-mt-1_56.lib;$(SolutionDir)external_libraries/BWTAlib_2.2/lib/libboost_system-vc120-mt-1_56.lib;$(SolutionDir)external_libraries/BWTAlib_2.2/lib/libboost_thread-vc120-mt-1_56.lib;$(SolutionDir)external_libraries/BWTAlib_2.2/lib/libCGAL-vc120-mt-4.4.lib;$(SolutionDir)external_libraries/BWTAlib_2.2/lib/libgmp-10.lib;$(SolutionDir)external_libraries/BWTAlib_2.2/lib/libmpfr-4.lib;$(SolutionDir)external_libraries\BWAPI\bwapi\Release\BWAPIClient.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>
