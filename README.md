@@ -1,4 +1,4 @@
-# BWSAL - BWAPI Standard Add-on Library
+# BWSAL2 - BWAPI Standard Add-on Library ("V2")
 Forked from the old repository on google code and upgraded to use the latest releases of BWAPI / BWTA2
 
 BWSAL has been upgraded to use:
