@@ -34,6 +34,7 @@
 #include <BWSAL/UnitGroupManager.h>
 #include <BWSAL/Util.h>
 #include <BWSAL/WorkerManager.h>
+#include <BWSAL/Version.h>
 
 namespace BWSAL
 {

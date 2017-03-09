@@ -105,6 +105,7 @@
     <ClCompile Include="Source\UnitGroup.cpp" />
     <ClCompile Include="Source\UnitGroupManager.cpp" />
     <ClCompile Include="Source\Util.cpp" />
+    <ClCompile Include="Source\Version.cpp" />
     <ClCompile Include="Source\WorkerManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +144,7 @@
     <ClInclude Include="..\include\BWSAL\UnitGroup.h" />
     <ClInclude Include="..\include\BWSAL\UnitGroupManager.h" />
     <ClInclude Include="..\include\BWSAL\Util.h" />
+    <ClInclude Include="..\include\BWSAL\Version.h" />
     <ClInclude Include="..\include\BWSAL\WorkerManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
