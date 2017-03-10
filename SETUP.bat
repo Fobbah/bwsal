@@ -23,9 +23,11 @@ pushd external_libraries\BWAPI\bwapi
 echo *************COMPILING DEBUG*****************
 msbuild bwapi.sln /p:Configuration=Debug /p:Platform=Win32 /t:BWAPI
 msbuild bwapi.sln /p:Configuration=Debug /p:Platform=Win32 /t:BWAPIClient
+msbuild bwapi.sln /p:Configuration=Debug /p:Platform=Win32 /t:BWAPI_PluginInjector
 echo ************COMPILING RELEASE****************
 msbuild bwapi.sln /p:Configuration=Release /p:Platform=Win32 /t:BWAPI
 msbuild bwapi.sln /p:Configuration=Release /p:Platform=Win32 /t:BWAPIClient
+msbuild bwapi.sln /p:Configuration=Release /p:Platform=Win32 /t:BWAPI_PluginInjector
 popd
 echo ===========BWSAL_SETUP COMPLETE==============
 pause
