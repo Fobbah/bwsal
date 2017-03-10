@@ -28,3 +28,4 @@ msbuild bwapi.sln /p:Configuration=Release /p:Platform=Win32 /t:BWAPI
 msbuild bwapi.sln /p:Configuration=Release /p:Platform=Win32 /t:BWAPIClient
 popd
 echo ===========BWSAL_SETUP COMPLETE==============
+pause
