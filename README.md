@@ -6,10 +6,15 @@ BWSAL has been upgraded to use:
 - BWTA2 2.2: https://bitbucket.org/auriarte/bwta2
 - Visual Studio 2013
 
-# Installation Instructions (from source)
+# Compilation Instructions (from source, automated setup)
+- Clone BWSAL
+- Run SETUP.bat (and wait for a few minutes)
+- Open BWSAL_DIRECTORY/ExampleProjects.sln
+
+# Compilation Instructions (from source, manual setup)
 - Clone BWSAL
 - Download BWTA2 2.2: https://bitbucket.org/auriarte/bwta2/downloads/BWTAlib_2.2.7z
-    - Extract to BWSAL_DIRECTORY/external_libraries/BWTAlib_2.2/
+    - Extract to BWSAL_DIRECTORY/external_libraries/BWTA2/
   
 - Download BWAPI 4.1.2 (source): https://github.com/bwapi/bwapi/archive/v4.1.2.zip
     - Extract to BWSAL_DIRECTORY/external_libraries/BWAPI/
