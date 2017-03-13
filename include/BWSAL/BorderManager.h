@@ -4,18 +4,35 @@
 namespace BWSAL
 {
   class InformationManager;
+
+  /*! \brief A border is a set of chokepoints that divides the map into two or more parts. The Border Manager can be used both to get the border around our base (i.e. for defense), and also for getting the border around the enemy's base (i.e. for containment).
+   */
   class BorderManager : public BWAPI::AIModule
   {
     public:
       static BorderManager* create( InformationManager* informationManager );
       static BorderManager* getInstance();
       static void destroy();
+
+	  //! Should be called every frame from within the BWAPI::AIModule onFrame() callback
       virtual void onFrame();
+
+	  //! Call when you are about to expand to the given base location.
       void addMyBase( BWTA::BaseLocation* location );
+
+	  //! Call when you are abandoning a base at the given base location.
       void removeMyBase( BWTA::BaseLocation* location );
+
+	  //! Returns the border around our base. Useful for defending against ground attacks.
       const std::set< BWTA::Chokepoint* >& getMyBorder() const;
+
+	  //! Returns the border around the enemy base. Useful for containing the enemy in his base.
       const std::set< BWTA::Chokepoint* >& getEnemyBorder() const;
+
+	  //! Returns the set of regions controlled by our player.
       const std::set< BWTA::Chokepoint* >& getMyRegions() const;
+
+	  //! Returns the set of regions controlled by the enemy.
       const std::set< BWTA::Chokepoint* >& getEnemyRegions() const;
       void draw();
     private:

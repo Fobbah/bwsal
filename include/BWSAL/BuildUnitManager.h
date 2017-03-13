@@ -3,6 +3,8 @@
 #include <BWSAL/BuildUnit.h>
 namespace BWSAL
 {
+  /*! \brief Manages the set of available builder units and assigns them to construction tasks with the BuildOrderManager
+   */
   class BuildUnitManager : public BWAPI::AIModule
   {
     friend BuildUnit;
