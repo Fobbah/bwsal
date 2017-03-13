@@ -13,9 +13,16 @@ namespace BWSAL
   class SupplyManager : public BWAPI::AIModule
   {
     public:
+      //! Create the SupplyManager instance, given a BuildOrderManager and TaskScheduler
       static SupplyManager* create( BuildOrderManager* buildOrderManager, TaskScheduler* taskScheduler );
+
+	  //! Return the SupplyManager instance
       static SupplyManager* getInstance();
+
+	  //! Destroy the SupplyManager instance
       static void destroy();
+
+	  //! Must be called every frame during the BWAPI::AIModule onFrame() callback
       virtual void onFrame();
     private:
       SupplyManager();
