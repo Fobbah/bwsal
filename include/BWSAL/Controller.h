@@ -3,6 +3,8 @@
 #include <string>
 namespace BWSAL
 {
+	/*! \brief Bids for access to a resource (eg, units) with an Arbitrator
+	 */
   template < class _Tp, class _Val > 
   class Controller
   {

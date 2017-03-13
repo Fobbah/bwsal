@@ -3,7 +3,7 @@
 #include <BWSAL/RectangleArray.h>
 namespace BWSAL
 {
-  // An implementation of a BuildingPlacer
+  //! An implementation of a BuildingPlacer, uses a breadth first search to find a build location near the specified position
   class BFSBuildingPlacer : public BuildingPlacer
   {
     public:

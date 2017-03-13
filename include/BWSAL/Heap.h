@@ -5,9 +5,10 @@
 #include <utility>
 namespace BWSAL
 {
-  /**
-   * An associated heap class with the ability to read and change the values
+  /*!
+   * \brief An associated heap class with the ability to read and change the values
    * of arbitrary objects in the heap.
+   *
    * Note: Objects in the heap must be unique, however any number of objects
    * can have the same value
    */

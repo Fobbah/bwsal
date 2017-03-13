@@ -41,7 +41,7 @@ public:
   //BWSAL::DefenseManager*     m_defenseManager;
   BWSAL::BuildOrderManager*  m_buildOrderManager;
   BWSAL::SupplyManager*      m_supplyManager;
-  EnhancedUI*                m_enhancedUI;
+  BWSAL::EnhancedUI*         m_enhancedUI;
 
   //EnhancedUI* enhancedUI;
   bool showManagerAssignments;

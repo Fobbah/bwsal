@@ -10,19 +10,42 @@ namespace BWSAL
   class TaskExecutor;
   class BuildUnitManager;
   class MacroTask;
+
+  //! Manages and automatically schedules a task list of units, upgrades and tech to produce.
   class BuildOrderManager : public BWAPI::AIModule
   {
     public:
+	  //! Create the BuildOrderManager singleton and return it
       static BuildOrderManager* create( TaskScheduler* taskScheduler, TaskExecutor* taskExecutor, BuildUnitManager* buildUnitManager );
+
+	  //! Return the BuildOrderManager singleton
       static BuildOrderManager* getInstance();
+
+	  //! Destory the BuildOrderManager singleton
       static void destroy();
+
+	  //! Must be called every frame during the BWAPI::AIModule onFrame() callback
       void onFrame();
+
+	  //! Draw debug text information at the specified screen coordinates
       void draw( int x, int y );
+
+	  //! Create, schedule and reutrn a MacroTask to bulid more of the specified unit type until the desired unit count is achieved, at a given priority level. If the unit is building, a seedLocation should be specified as a TilePosition for building placement.
       MacroTask* build( int count, BWAPI::UnitType t, int priority, BWAPI::TilePosition seedLocation = BWAPI::TilePositions::None );
+
+	  //! Create, schedule and return a MacroTask to bulid the specified unit type & count, at a given priority level. If the unit is building, a seedLocation should be specified as a TilePosition for building placement.
       MacroTask* buildAdditional( int count, BWAPI::UnitType t, int priority, BWAPI::TilePosition seedLocation = BWAPI::TilePositions::None );
+
+	  //! Create, schedule and return a MacroTask to bulid the specified BuildType & count, at a given priority level. If the BuildType is building unit, a seedLocation should be specified as a TilePosition for building placement.
       MacroTask* buildAdditional( int count, BuildType t, int priority, BWAPI::TilePosition seedLocation = BWAPI::TilePositions::None );
+
+	  //! Create, schedule and return a MacroTask to research the specified TechType at a given priority level
       MacroTask* research( BWAPI::TechType t, int priority );
+
+	  //! Create, schedule and return a MacroTask to upgrade the specified UpgradeType at a given priority level
       MacroTask* upgrade( int level, BWAPI::UpgradeType t, int priority );
+
+	  //! Cancel (deschedule) a MacroTask
       void deleteMacroTask( MacroTask* mt );
 
     private:

@@ -3,6 +3,11 @@
 
 namespace BWSAL
 {
+  /*! 
+   * \brief Simple composition that can represent a UnitType, TechType OR UpgradeType to be produced.
+   *  Useful for scheduling a single ordered list of tasks to produce that can span any of these types.
+   *  Comes with many useful utility functions to interact with these tasks in a unified way.
+   */
   class BuildType
   {
     public:
@@ -23,35 +28,74 @@ namespace BWSAL
       bool operator<( const BuildType& other ) const;
       operator int() const;
 
+	  //! Returns the unique ID of this BuildType
       int getID() const;
+
+	  //! Returns the name of this BuildType
       const std::string& getName() const;
+
+	  //! Returns the race of this BuildType
       BWAPI::Race getRace() const;
 
+	  //! Returns true if this BuildType is a TechType
       bool isTechType() const;
+
+	  //! Returns true if this BuildType is a UnitType
       bool isUnitType() const;
+
+	  //! Returns true if this BuildType is an UpgradeType
       bool isUpgradeType() const;
+
+	  //! Return the TechType for this BuildType.
       BWAPI::TechType getTechType() const;
+
+	  //! Return the UnitType for this BuildType.
       BWAPI::UnitType getUnitType() const;
+
+	  //! Return the UpgradeType for this BuildType.
       BWAPI::UpgradeType getUpgradeType() const;
+
+	  //! Return the level of the UpgradeType for this BuildType
       int getUpgradeLevel() const;
       unsigned int getMask() const;
       unsigned int getRequiredMask() const;
 
+	  //! Returns the list of BuildType that build this BuildType
       const std::pair< BuildType, int > whatBuilds() const;
+
+	  //! Returns the list of BuildType that are tech tree requirements to build this BuildType
       const std::map< BuildType, int >& requiredBuildTypes() const;
 
+	  //! Returns true if this BuildType needs a Psi field
       bool requiresPsi() const;
+
+	  //! Returns true if this BuildType requires larva
       bool requiresLarva() const;
+
+	  //! Returns true if this BuildType requires an Addon for the Builder
       BuildType requiredAddon() const;
+
+	  //! Returns the mineral cost to produce this BuildType
       int mineralPrice() const;
+
+	  //! Returns the gas cost to produce this BuildType
       int gasPrice() const;
+
       int builderTime() const;
       int buildUnitTime() const;
       int prepTime() const;
       bool createsUnit() const;
+
+	  //! Returns true if this BuildType morphs the builder when constructed
       bool morphsBuilder() const;
+
+	  //! Returns true if this BuildType requires a construction location (eg, a building)
       bool needsBuildLocation() const;
+
+	  //! Returns the amount of supply required to support this BuildType
       int supplyRequired() const;
+
+	  //! Returns the amount of supply provided by this BuildType
       int supplyProvided() const;
 
       bool build( BWAPI::Unit builder, BWAPI::Unit secondBuilder, BWAPI::TilePosition buildLocation ) const;

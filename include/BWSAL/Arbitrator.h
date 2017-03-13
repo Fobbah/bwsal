@@ -7,6 +7,9 @@
 #include <BWAPI/Unit.h>
 namespace BWSAL
 {
+
+	/*!  \brief Controls access to a pool of resources (eg, units). Allows a set of Controller to bid for access to those resources and allocates them to the highest bidders.
+	*/
   template < class _Tp, class _Val >
   class Arbitrator
   {
@@ -500,6 +503,10 @@ namespace BWSAL
     }
     this->inUpdate = false;
   }
+
+  /** Arbitrates the allication of a set of Unit among a set of UnitController */
   typedef Arbitrator< BWAPI::Unit, double > UnitArbitrator;
+
+  /** Bids for control of units with a UnitArbitrator */
   typedef Controller< BWAPI::Unit, double > UnitController;
 }

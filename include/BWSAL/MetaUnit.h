@@ -6,8 +6,12 @@ namespace BWAPI
 }
 namespace BWSAL
 {
-  // Meta Unit interface. Implemented by BuildUnits and MetaUnitVariables
   class BuildUnit;
+
+  /*! \brief (Internal class) Meta Unit interface. Implemented by BuildUnit and MetaUnitVariable
+  *
+  * FIXME: remove from public API?
+  */
   class MetaUnit
   {
     public:

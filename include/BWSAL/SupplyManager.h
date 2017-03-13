@@ -7,6 +7,9 @@ namespace BWSAL
   class Task;
   class BuildOrderManager;
   class TaskScheduler;
+
+  /*! \brief Automatically interacts with a BuildOrderManager to build an appropriate amount of supply bulidings/units to execute the queue of MacroTask jobs.
+   */
   class SupplyManager : public BWAPI::AIModule
   {
     public:

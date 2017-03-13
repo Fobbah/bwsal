@@ -8,6 +8,11 @@ namespace BWAPI
 namespace BWSAL
 {
   class Task;
+
+  /*! \brief (Internal class) extension of a MetaUnit
+  *
+  * TODO: remove from public API?
+  */
   class MetaUnitVariable : public MetaUnit
   {
     public:
