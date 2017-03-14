@@ -4,6 +4,9 @@ echo Downloading BWTA2 2.2
 tools\curl\curl.exe -o external_libraries/BWTAlib_2.2.7z -k -L --remote-name https://bitbucket.org/auriarte/bwta2/downloads/BWTAlib_2.2.7z
 echo Downloading BWAPI 4.1.2
 tools\curl\curl.exe -o external_libraries/bwapi_v4.1.2.zip -k -L --remote-name https://github.com/bwapi/bwapi/archive/v4.1.2.zip
+echo Downloading Catch
+mkdir external_libraries\catch
+tools\curl\curl.exe -o external_libraries/catch/catch.hpp -k -L --remote-name https://github.com/philsquared/Catch/releases/download/v1.8.2/catch.hpp
 echo Finished fetching dependencies
 echo ========Extracting BWSAL Dependencies========
 echo Extracting BWTA 2.2
