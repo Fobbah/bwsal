@@ -375,6 +375,7 @@ namespace BWSAL
       return;
     }
     // TODO: Implement
+	throw std::runtime_error("unimplemented");
   }
 
   void BuildOrderManager::draw( int x, int y )

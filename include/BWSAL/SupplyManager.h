@@ -22,7 +22,7 @@ namespace BWSAL
 	  //! Destroy the SupplyManager instance
       static void destroy();
 
-	  //! Must be called every frame during the BWAPI::AIModule onFrame() callback
+	  //! Must be called every frame during the BWAPI::AIModule onFrame()
       virtual void onFrame();
     private:
       SupplyManager();

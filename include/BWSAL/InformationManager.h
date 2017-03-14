@@ -25,19 +25,19 @@ namespace BWSAL
 	  //! Destroy the active InformationManager singleton
       static void destroy();
 
-	  //! Must be called every frame during the BWAPI::AIModule onFrame() callback. Updates the information manager with information currently visible to the player. 
+	  //! Must be called every frame during the BWAPI::AIModule onFrame(). Updates the information manager with information currently visible to the player. 
 	  virtual void onFrame();
 
-	  //! Must be called during the BWAPI::AIModule onUnitDiscover() callback. The newly observable unit is added the InformationManager's list of tracked units
+	  //! Must be called during the BWAPI::AIModule onUnitDiscover(). The newly observable unit is added the InformationManager's list of tracked units
 	  virtual void onUnitDiscover(BWAPI::Unit unit) override;
 
-	  //! Should be called during the BWAPI::AIModule onUnitHide() callback.
+	  //! Should be called during the BWAPI::AIModule onUnitHide().
 	  virtual void onUnitHide(BWAPI::Unit unit) override;
 
-	  //! Should be called during the BWAPI::AIModule() onUnitEvade() callback.
+	  //! Should be called during the BWAPI::AIModule() onUnitEvade().
 	  virtual void onUnitEvade(BWAPI::Unit unit) override;
 
-	  //! Must be called during the BWAPI::AIModule onUnitDestroy() callback. The newly destroyed unit
+	  //! Must be called during the BWAPI::AIModule onUnitDestroy()
       virtual void onUnitDestroy( BWAPI::Unit unit );
 
 	  //! Retrieve the last known owner of this unit

@@ -14,7 +14,7 @@ namespace BWSAL
       static BorderManager* getInstance();
       static void destroy();
 
-	  //! Should be called every frame from within the BWAPI::AIModule onFrame() callback
+	  //! Should be called every frame from within BWAPI::AIModule onFrame()
       virtual void onFrame();
 
 	  //! Call when you are about to expand to the given base location.

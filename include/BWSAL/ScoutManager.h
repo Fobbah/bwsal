@@ -19,10 +19,10 @@ namespace BWSAL
 	  //! Destroy the ScoutManager singleton instance
       static void destroy();
 
-	  //! UnitController callback, the scout manager has been offered these units by the Arbitrator
+	  //! UnitController notification, the scout manager has been offered these units by the Arbitrator
       virtual void onOffer( std::set< BWAPI::Unit > units );
 
-	  //! UnitController callback, the Arbitrator has revoked access to this unit, and been outbid with the supplied bid
+	  //! UnitController notification, the Arbitrator has revoked access to this unit, and the ScoutManager has been outbid with the supplied bid
       virtual void onRevoke( BWAPI::Unit unit, double bid );
 
 	  //! Should be called every frame from AIModule::onFrame()

@@ -23,10 +23,10 @@ namespace BWSAL
 	  //! Destroy the active BaseManager singleton
       static void destroy();
 
-	  //! Must be called every frame during BWAPI::AIModule onFrame() callback. Updates the list of bases and whether they have been claimed
+	  //! Must be called every frame during BWAPI::AIModule onFrame(). Updates the list of bases and whether they have been claimed
       virtual void onFrame();
 
-	  //! Must be called every frame during BWPAI::AIModule onUnitDestroy() callback. Notifies the bases of destroyed units so that they may update whether or not a base is currently claimed.
+	  //! Must be called every frame during BWPAI::AIModule onUnitDestroy(). Notifies the bases of destroyed units so that they may update whether or not a base is currently claimed.
       virtual void onUnitDestroy( BWAPI::Unit unit );
 
 	  //! Retrieve the Base at a given BWTA::BaseLocation
